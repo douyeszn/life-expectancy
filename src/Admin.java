@@ -1,11 +1,11 @@
 import java.util.UUID;
 
 public class Admin extends User {
-    public Admin(String email, String password, String role) {
+    public Admin(String email, String password, Role role) {
         super(email, password, role);
     }
 
-    public String initiateReg(String email){
+    public void initiateReg(String email){
         UUID uuid = UUID.randomUUID();
         System.out.println(uuid.toString());
     }

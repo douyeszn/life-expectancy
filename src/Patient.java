@@ -1,5 +1,5 @@
 public class Patient extends User{
-    public Patient(String email, String password, String role) {
+    public Patient(String email, String password, Role role) {
         super(email, password, role);
     }
 
