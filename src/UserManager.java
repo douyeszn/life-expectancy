@@ -1,4 +1,3 @@
-import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -6,9 +5,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileManager {
+public class UserManager {
+//    public User findUser(String email){
+//        grep Kigali data-no-header.csv | cut -d "," -f3
+//    }
 
-    public static void appendToFile(String[] userString){
+    public static void addUser(String[] userString){
         String[] cmd = new String[]{"resources/test.sh"};
         List<String> listOfArgs = new ArrayList<>();
         listOfArgs.add("resources/test.sh");
@@ -27,4 +29,5 @@ public class FileManager {
             e.printStackTrace();
         }
     }
+
 }
