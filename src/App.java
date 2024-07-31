@@ -1,6 +1,9 @@
 public class App {
     public static void main(String[] args) {
-        String[] userItem = new String[]{"victor","miene","admin"};
-        FileManager.appendToFile(userItem);
+        System.out.println("Enter username and password to login:");
+
+        //test
+//        String[] userItem = new String[]{"victor","miene","admin"};
+//        FileManager.appendToFile(userItem);
     }
 }
