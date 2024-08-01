@@ -6,6 +6,7 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("running");
 
+
         while (true) {
             Menus.homePage();
 
@@ -41,25 +42,24 @@ public class App {
         }
 
         scanner.close();
-    }
-}
-
 
         //test
-        // String[] userItem = new String[]{"victor","miene","admin"};
-        // UserManager.completeRegistration(
-        //         "4174000",
-        //         "John",
-        //         "Doe",
-        //         "1990-01-01",
-        //         true,
-        //         false,
-        //         "US",
-        //         "2024-01-01",
-        //         "securePassword123"
-        // );
+//           String[] userItem = new String[]{"victor","miene","admin"};
+//           UserManager.completeRegistration(
+//                   "4174000",
+//                   "John",
+//                   "Doe",
+//                   "1990-01-01",
+//                   true,
+//                   false,
+//                   "US",
+//                   "2024-01-01",
+//                   "securePassword123"
+//           );
         //
         //
 
 //        UserManager.findUser("a");
 
+    }
+}
