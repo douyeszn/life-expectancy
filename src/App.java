@@ -29,7 +29,7 @@ public class App {
                     break;
                 case 2:
                     // Handle new registration
-                    Menus.newRegistrationPage(scanner);
+                    Menus.newRegistrationPage(scanner);1
                     break;
                 case 3:
                     // Handle complete registration
