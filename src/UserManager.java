@@ -38,7 +38,7 @@ public class UserManager {
     }
 
     public static void login(String email, String password) throws IOException, InterruptedException {
-        String[] cmd = new String[]{"resources/login.sh","admin@andrew.cmu.edu", "12345"};
+        String[] cmd = new String[]{"resources/login.sh",email, password};
         ProcessBuilder pb = new ProcessBuilder(cmd);
         Process process = pb.start();
 
