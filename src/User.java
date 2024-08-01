@@ -9,5 +9,5 @@ public abstract class User {
         this.role = role;
     }
 
-    public abstract void login(String email, String password);
+
 }

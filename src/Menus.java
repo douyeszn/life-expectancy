@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Menus {
@@ -10,13 +11,14 @@ public class Menus {
         System.out.print("> ");
     }
 
-    public static void loginPage(Scanner scanner) {
+    public static void loginPage(Scanner scanner) throws IOException, InterruptedException {
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
         System.out.println();
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
+        UserManager.login(Credentials.email, Credentials.password);
         System.out.println("***************************************");
     }
     

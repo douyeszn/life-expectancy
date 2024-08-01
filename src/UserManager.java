@@ -3,9 +3,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
-import java.text.SimpleDateFormat;
 
 public class UserManager {
     public static void completeRegistration(
@@ -17,30 +15,45 @@ public class UserManager {
             boolean onARTMedication,
             String countryISO,
             String startARTDate,
-            String password) throws IOException {
+            String email,
+            String password,
+            String diagnosisDate) throws IOException {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy\"");
-
-        String[] userParams = new String[]{
+    String[] userDetails = new String[]{
                 uuid,
                 firstName,
                 lastName,
+                email,
+                password,
                 Role.PATIENT.toString(),
-              dateOfBirth,
-                Boolean.toString(isHIVPositive),
-                Boolean.toString(onARTMedication),
+                dateOfBirth,
                 countryISO,
-                startARTDate,
-                password
+                Boolean.toString(isHIVPositive),
+                diagnosisDate,
+                Boolean.toString(onARTMedication),
+                startARTDate
         };
-//one
-        UserManager.addUser(userParams);
+
+        UserManager.addUser(userDetails);
+    }
+
+    public static void login(String email, String password) throws IOException, InterruptedException {
+        String[] cmd = new String[]{"resources/login.sh",email, password};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        Process process = pb.start();
+
+        process.waitFor();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        String user;
+        while((user=reader.readLine())!= null) {
+            System.out.println(user);
+        }
     }
 
 
     public static String findUser(String email) throws IOException, InterruptedException {
 
-        String[] cmd = new String[]{"resources/findUser.sh","victor"};
+        String[] cmd = new String[]{"resources/findUser.sh","Doe"};
         ProcessBuilder pb = new ProcessBuilder(cmd);
         Process process = pb.start();
 
