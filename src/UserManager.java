@@ -38,7 +38,7 @@ public class UserManager {
     }
 
     public static void login(String email, String password) {
-        String[] cmd = new String[]{"resources/login.sh", email, password};
+        String[] cmd = new String[]{"resource/login.sh", email, password};
         ProcessBuilder pb = new ProcessBuilder(cmd);
 
         try {
@@ -61,7 +61,7 @@ public class UserManager {
 
     public static String findUser(String email) throws IOException, InterruptedException {
 
-        String[] cmd = new String[]{"resources/findUser.sh","Doe"};
+        String[] cmd = new String[]{"resource/findUser.sh","Doe"};
         ProcessBuilder pb = new ProcessBuilder(cmd);
         Process process = pb.start();
 
@@ -77,7 +77,7 @@ public class UserManager {
     public static void addUser(String[] userString) throws IOException {
       String[] cmd = new String[]{"resources/addUser.sh"};
         List<String> listOfArgs = new ArrayList<>();
-        listOfArgs.add("resources/addUser.sh");
+        listOfArgs.add("resource/addUser.sh");
 
         listOfArgs.addAll(Arrays.asList(userString));
         String[] args = listOfArgs.toArray(new String[0]);
