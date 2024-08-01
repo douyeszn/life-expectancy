@@ -23,25 +23,46 @@ public class App {
                 continue;
             }
 
+            User user = null;
             switch (option) {
                 case 1:
-                    Menus.loginPage(scanner, Role.PATIENT);
+                    user = Menus.loginPage(scanner, Role.PATIENT);
                     break;
                 case 2:
-                    Menus.loginPage(scanner, Role.ADMIN);
-                    break;
+                    user = Menus.loginPage(scanner, Role.ADMIN);
+                  break;
                 case 3:
-                    // Handle new registration
-                    Menus.newRegistrationPage(scanner);
-                    break;
-                case 4:
-                    // Handle complete registration
                     Menus.completeRegPage(scanner);
-                    break;
+                    return;
                 default:
                     System.out.println("Invalid option. Please try again.");
-                    break;
+                    return;
             }
+
+            Role loggedInRole = user.getRole();
+            System.out.println("Role: " + loggedInRole.toString());
+            if (loggedInRole == Role.ADMIN) {
+                System.out.println();
+                System.out.println("********** Admin Menu - Choose option **********");
+                System.out.println("1. New Registration");
+                System.out.println("*****************************************");
+                System.out.print("> ");
+
+                int adminOption = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (adminOption) {
+                    case 1:
+                        Menus.newRegistrationPage(scanner, (Admin) user);
+                        break;
+                    default:
+                        System.out.println("Invalid option. Please try again.");
+                        break;
+                }
+            } else {
+                System.out.println("Logged in as Patient. No additional options available.");
+            }
+
         }
 
         scanner.close();

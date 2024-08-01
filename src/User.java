@@ -13,5 +13,9 @@ public abstract class User {
         this.role = role;
     }
 
+    public Role getRole(){
+        return this.role;
+    }
+
     public abstract void login();
 }

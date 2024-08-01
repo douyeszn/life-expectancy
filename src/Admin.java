@@ -6,11 +6,16 @@ public class Admin extends User {
         super(null, null, email, password, Role.ADMIN);
     }
 
-    public void initiateReg(String email) throws IOException {
-        UUID uuid = UUID.randomUUID();
-        System.out.println(uuid.toString());
-        String[] user = new String[]{uuid.toString()};
-        UserManager.addUser(user);
+    public void initiateReg(String email)  {
+        try {
+            UUID uuid = UUID.randomUUID();
+            System.out.println("Patient UUID: " + uuid.toString());
+            String[] user = new String[]{uuid.toString(), " ", " ",email};
+            UserManager.addUser(user);
+        } catch (Exception e) {
+
+            System.err.println("Registration failed" + e.getMessage());
+        }
     }
 
     public void login(){
