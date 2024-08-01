@@ -1,0 +1,2 @@
+UUID,firstName,lastName, email, password, role, dateofBirth, countryISO, isHIVPositive, DiagnosisDate, onARTMed, startARTDate
+001,super,admin,admin@andrew.cmu.edu,12345,ADMIN
