@@ -48,12 +48,54 @@ public class Menus {
     public static void completeRegPage(Scanner scanner) {
         System.out.println();
         System.out.println("**************** Complete Registration ****************");
-        System.out.print("Enter email > ");
-        Credentials.email = scanner.nextLine();
-        System.out.println();
         System.out.print("Enter UUID > ");
-        Credentials.password = scanner.nextLine();
-        // verify if email UUID correct
+        String uuid = scanner.nextLine();
+        Boolean isUser = UserManager.findUser(uuid);
+        if (isUser) {
+            System.out.print("Enter Date of Birth (YYYY-MM-DD) > ");
+            String dateOfBirth = scanner.nextLine();
+
+            System.out.print("Is the user HIV Positive? (true/false) > ");
+            boolean isHIVPositive = Boolean.parseBoolean(scanner.nextLine());
+
+            String diagnosisDate = "";
+            if (isHIVPositive) {
+                System.out.print("Enter Diagnosis Date (YYYY-MM-DD) > ");
+                diagnosisDate = scanner.nextLine();
+            }
+
+            System.out.print("Is the user on ART Medication? (true/false) > ");
+            boolean onARTMedication = Boolean.parseBoolean(scanner.nextLine());
+
+            String startARTDate = null;
+            if (onARTMedication) {
+                System.out.print("Enter Start ART Date (YYYY-MM-DD) > ");
+                startARTDate = scanner.nextLine();
+            }
+
+            System.out.print("Enter Country ISO Code > ");
+            String countryISO = scanner.nextLine();
+
+            UserManager.completeRegistration(
+                    uuid,
+                    "John",
+                    "Doe",
+                    dateOfBirth,
+                    isHIVPositive,
+                    onARTMedication,
+                    countryISO,
+                    startARTDate,
+                    Credentials.email,
+                    "1234",
+                    diagnosisDate
+
+            );
+
+            System.out.println("Registration complete!");
+        } else {
+            System.out.println("User does not exist.");
+        }
+
         System.out.println("***************************************");
     }
 }

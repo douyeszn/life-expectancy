@@ -17,8 +17,8 @@ public class UserManager {
             String startARTDate,
             String email,
             String password,
-            String diagnosisDate) throws IOException {
-
+            String diagnosisDate) {
+try{
     String[] userDetails = new String[]{
                 uuid,
                 firstName,
@@ -35,6 +35,9 @@ public class UserManager {
         };
 
         UserManager.addUser(userDetails);
+} catch (Exception e) {
+    System.err.println("An error occurred: " + e.getMessage());
+}
     }
 
     public static void login(String email, String password, Role role) {
@@ -57,21 +60,28 @@ public class UserManager {
         }
     }
 
+    public static Boolean findUser(String UUID) {
+        String user = null;
+        try {
+            String[] cmd = new String[]{"resource/findUser.sh", UUID};
+            ProcessBuilder pb = new ProcessBuilder(cmd);
+            Process process = pb.start();
 
+            process.waitFor();
 
-    public static String findUser(String email) throws IOException, InterruptedException {
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            user = reader.readLine();  // Read the first (and only) line of output
 
-        String[] cmd = new String[]{"resource/findUser.sh","Doe"};
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-        Process process = pb.start();
+            if (user != null) {
+                return true;
+            }
 
-        process.waitFor();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String user;
-        while((user=reader.readLine())!= null) {
-            System.out.println(user);
+            return false;
+        } catch (Exception e) {
+            System.err.println("An error occurred: " + e.getMessage());
         }
-        return user;
+
+        return false;
     }
 
     public static void addUser(String[] userString) throws IOException {

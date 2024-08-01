@@ -1,5 +1,4 @@
 #!/bin/bash
-email=$1
-email=Doe
-#echo "findUser($1)"
-cut -d "," -f3 ./user-store.txt | grep "^${email}$"
+UUID=$1
+user=$(cut -d "," -f1 ./user-store.txt | grep "^${UUID}$")
+echo $user

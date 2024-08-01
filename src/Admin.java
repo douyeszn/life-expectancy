@@ -1,5 +1,5 @@
-import java.io.IOException;
 import java.util.UUID;
+
 
 public class Admin extends User {
     public Admin(String email, String password) {
