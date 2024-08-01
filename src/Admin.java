@@ -13,7 +13,7 @@ public class Admin extends User {
         UserManager.addUser(user);
     }
 
-    public void login(String email, String password) {
+    public void login() {
 
     }
 

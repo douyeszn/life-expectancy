@@ -1,13 +1,9 @@
 public class Patient extends User{
-    public Patient(String email, String password, Role role) {
-        super(email, password, role);
+    public Patient(String email, String password) {
+        super(email, password, Role.PATIENT);
     }
 
-    public void login(String email, String password){
-        //        if(!password.equals(this.getPassword())){
-//
-//        }
-
-        //checkRoleFromFile -> this.role = role
+    public void login(){
+        UserManager.login(this.email, this.password);
     }
 }

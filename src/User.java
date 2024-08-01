@@ -1,7 +1,7 @@
 public abstract class User {
-    private String email;
-    private String password;
-    private Role role;
+    protected String email;
+    protected String password;
+    protected Role role;
 
     public User(String email, String password, Role role){
         this.email = email;
@@ -9,5 +9,5 @@ public abstract class User {
         this.role = role;
     }
 
-
+    public abstract void login();
 }
