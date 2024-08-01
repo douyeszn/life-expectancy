@@ -37,8 +37,8 @@ public class UserManager {
         UserManager.addUser(userDetails);
     }
 
-    public static void login(String email, String password) {
-        String[] cmd = new String[]{"resource/login.sh", email, password};
+    public static void login(String email, String password, Role role) {
+        String[] cmd = new String[]{"resource/login.sh", email, password, role.toString()};
         ProcessBuilder pb = new ProcessBuilder(cmd);
 
         try {

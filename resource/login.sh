@@ -1,6 +1,8 @@
 #!/bin/bash
 email=$1
 pwd=$2
+role=$3
+
 userRow=$(grep "^.*,$email,.*$" ./user-store.txt)
 
 if [ -z "$userRow" ]; then
@@ -11,7 +13,12 @@ fi
 uuid=$(echo "$userRow" | cut -d ',' -f1)
 storedPwd=$(echo "$userRow" | cut -d ',' -f5)
 
-role=$(echo "$userRow" | cut -d ',' -f6)
+storedRole=$(echo "$userRow" | cut -d ',' -f6)
+
+if [ "$role" != "$storedRole" ]; then
+  echo "User does not exist"
+  exit 0
+fi
 
 if [ "$pwd" == "$storedPwd" ]; then
   echo "Login successful for UUID: $uuid"

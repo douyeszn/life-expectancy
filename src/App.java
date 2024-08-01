@@ -25,13 +25,16 @@ public class App {
 
             switch (option) {
                 case 1:
-                    Menus.loginPage(scanner);
+                    Menus.loginPage(scanner, Role.PATIENT);
                     break;
                 case 2:
+                    Menus.loginPage(scanner, Role.ADMIN);
+                    break;
+                case 3:
                     // Handle new registration
                     Menus.newRegistrationPage(scanner);
                     break;
-                case 3:
+                case 4:
                     // Handle complete registration
                     Menus.completeRegPage(scanner);
                     break;

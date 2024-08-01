@@ -4,6 +4,6 @@ public class Patient extends User{
     }
 
     public void login(){
-        UserManager.login(this.email, this.password);
+        UserManager.login(this.email, this.password, Role.PATIENT);
     }
 }
