@@ -29,11 +29,11 @@ public class App {
                     break;
                 case 2:
                     // Handle new registration
-                    System.out.println("New registration feature not implemented yet.");
+                    Menus.newRegistrationPage(scanner);
                     break;
                 case 3:
                     // Handle complete registration
-                    System.out.println("Complete registration feature not implemented yet.");
+                    Menus.completeRegPage(scanner);
                     break;
                 default:
                     System.out.println("Invalid option. Please try again.");
