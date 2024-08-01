@@ -18,7 +18,8 @@ public class Menus {
         System.out.println();
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
-        UserManager.login(Credentials.email, Credentials.password);
+        Patient patient = new Patient(Credentials.email, Credentials.password);
+        patient.login();
         System.out.println("***************************************");
     }
 }

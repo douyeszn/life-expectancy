@@ -37,18 +37,26 @@ public class UserManager {
         UserManager.addUser(userDetails);
     }
 
-    public static void login(String email, String password) throws IOException, InterruptedException {
-        String[] cmd = new String[]{"resources/login.sh",email, password};
+    public static void login(String email, String password) {
+        String[] cmd = new String[]{"resources/login.sh", email, password};
         ProcessBuilder pb = new ProcessBuilder(cmd);
-        Process process = pb.start();
 
-        process.waitFor();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        String user;
-        while((user=reader.readLine())!= null) {
-            System.out.println(user);
+        try {
+            Process process = pb.start();
+            process.waitFor();
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String user;
+
+            while ((user = reader.readLine()) != null) {
+                System.out.println(user);
+            }
+
+        } catch (Exception e) {
+            System.err.println("An error occurred: " + e.getMessage());
         }
     }
+
 
 
     public static String findUser(String email) throws IOException, InterruptedException {
