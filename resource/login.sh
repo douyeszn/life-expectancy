@@ -15,7 +15,7 @@ role=$(echo "$userRow" | cut -d ',' -f6)
 
 if [ "$pwd" == "$storedPwd" ]; then
   echo "Login successful for UUID: $uuid"
-  echo "$uuid $role"
+#  echo "$uuid $role"
   exit 0
 else
   echo "Incorrect password"
