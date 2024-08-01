@@ -19,4 +19,22 @@ public class Menus {
         Credentials.password = scanner.nextLine();
         System.out.println("***************************************");
     }
+    
+    public static void newRegistrationPage(Scanner scanner) {
+        System.out.println("********** Register New User **********");
+        System.out.print("Enter New User email > ");
+        Credentials.email = scanner.nextLine();
+        System.out.println("***************************************");
+    }
+
+    public static void completeRegPage(Scanner scanner) {
+        System.out.println("**************** Complete Registration ****************");
+        System.out.print("Enter email > ");
+        Credentials.email = scanner.nextLine();
+        System.out.println();
+        System.out.print("Enter UUID > ");
+        Credentials.password = scanner.nextLine();
+        // verify if email UUID correct
+        System.out.println("***************************************");
+    }
 }
