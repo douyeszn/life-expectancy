@@ -22,9 +22,8 @@ if [ "$role" != "$storedRole" ]; then
   exit 0
 fi
 
-echo  "hash $hashPwd $storedPwd"
 if [ "$hashPwd" == "$storedPwd" ]; then
-  echo "Login successful for UUID: $1"
+  echo Use
   exit 0
 else
   echo "Incorrect password"

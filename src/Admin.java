@@ -18,8 +18,8 @@ public class Admin extends User {
         }
     }
 
-    public void login(){
-        UserManager.login(this.email, this.password, Role.ADMIN);
+    public boolean login(){
+        return UserManager.login(this.email, this.password, Role.ADMIN);
     }
 
 

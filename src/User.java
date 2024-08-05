@@ -17,5 +17,5 @@ public abstract class User {
         return this.role;
     }
 
-    public abstract void login();
+    public abstract boolean login();
 }

@@ -40,13 +40,17 @@ try{
 }
     }
 
-    public static void login(String email, String password, Role role) {
+    public static boolean login(String email, String password, Role role) {
         String[] cmd = new String[]{"resource/login.sh", email, password, role.toString()};
         ProcessBuilder pb = new ProcessBuilder(cmd);
 
         try {
             Process process = pb.start();
-            process.waitFor();
+            int exitCode = process.waitFor();
+
+            if (exitCode == 1) {
+                return false;
+            }
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String user;
@@ -55,9 +59,12 @@ try{
                 System.out.println(user);
             }
 
+            return true;
+
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }
+        return false;
     }
 
     public static Boolean findUser(String UUID) {

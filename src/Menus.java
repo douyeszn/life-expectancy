@@ -23,11 +23,17 @@ public class Menus {
         User user;
         if(Role.ADMIN.equals(role)){
             Admin admin = new Admin(Credentials.email, Credentials.password);
-            admin.login();
+            boolean isLoggedIn = admin.login();
+            if(!isLoggedIn){
+                return null;
+            }
             user = admin;
         }else {
             Patient patient = new Patient(Credentials.email, Credentials.password);
-            patient.login();
+            boolean isLoggedIn = patient.login();
+            if(!isLoggedIn){
+                return null;
+            }
             user = patient;
 
         }

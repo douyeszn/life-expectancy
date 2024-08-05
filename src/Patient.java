@@ -28,7 +28,7 @@ public class Patient extends User{
         this.startARTDate = startARTDate;
     }
 
-    public void login(){
-        UserManager.login(this.email, this.password, Role.PATIENT);
+    public boolean login(){
+         return UserManager.login(this.email, this.password, Role.PATIENT);
     }
 }
