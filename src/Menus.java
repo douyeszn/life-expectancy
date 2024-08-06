@@ -26,18 +26,20 @@ public class Menus {
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {
+        // Admin admin = new Admin(null, null);
         System.out.println();
         System.out.println("********** Register New User **********");
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
-        admin.initiateReg(Credentials.email);
+        // admin.initiateReg(Credentials.email);
+        admin.newPatientReg();
         System.out.println("***************************************");
     }
     public static void adminPage(Scanner scanner, Admin admin){
         System.out.println();
         System.out.println("********** Admin Menu - Choose option **********");
         System.out.println("1. Register New user");
-        // System.out.println("2. Register New Admin");
+        System.out.println("2. Register New Admin");
         System.out.println("3. Export data");
         System.out.println("************************************************");
         System.out.print("> ");

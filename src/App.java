@@ -4,8 +4,6 @@ import java.util.Scanner;
 public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("running");
-
         while (true) {
             Menus.homePage();
 
@@ -24,7 +22,11 @@ public class App {
 
             switch (option) {
                 case 1:
-                    Menus.loginPage(scanner);
+                    Role role;
+                    role = Menus.loginPage(scanner);
+                    if(role.equals(Role.ADMIN)){
+                        Menus.adminPage(scanner, null);
+                    }
                     break;
                 case 2:
                     Menus.completeRegPage(scanner);

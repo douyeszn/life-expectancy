@@ -3,10 +3,10 @@ import java.util.UUID;
 
 public class Admin extends User {
     public Admin(String email, String password) {
-        super(null, null, email, password, Role.ADMIN);
+        super(null, null, email, password);
     }
 
-    public void initiateReg(String email)  {
+    public void initiateReg(String email){
         try {
             UUID uuid = UUID.randomUUID();
             if(uuid != null){
@@ -20,5 +20,21 @@ public class Admin extends User {
         } catch (Exception e) {
             System.err.println("Registration failed" + e.getMessage());
         }
+    }
+
+    public boolean newPatientReg(){
+        try {
+            UUID uuid = UUID.randomUUID();
+            if(uuid != null){
+                System.out.println("Patient UUID: " + uuid.toString());
+                // String[] user = new String[]{uuid.toString(), " ", " ",email};
+                // UserManager.addUser(user);
+                return true;
+            }
+        } catch (Exception e) {
+            System.err.println("Registration failed" + e.getMessage());
+            return false;
+        }
+        return false;
     }
 }

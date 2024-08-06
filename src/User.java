@@ -8,13 +8,6 @@ public abstract class User {
     protected String password;
     protected Role role;
 
-    public User(String firstName, String lastName, String email, String password, Role role){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.role = role;
-    }
     public User(String firstName, String lastName, String email, String password){
         this.firstName = firstName;
         this.lastName = lastName;
@@ -76,7 +69,25 @@ public abstract class User {
         }
     }
 
-    // public Role getRole(){
-    //     return this.role;
-    // }
+    public static void getCredentials(String data, int field){
+        String userData = "";
+        String[] cmd = new String[]{"resource/getUserData.sh", data, Integer.toString(field)};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            if (exitCode == 1) {
+                System.out.println("Failed to get user role");
+            }else{
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                userData = reader.readLine();
+            }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+        String roleString = userData.toUpperCase();
+        System.out.println(roleString);
+        // Credentials.email = 
+    }
 }

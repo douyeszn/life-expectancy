@@ -6,9 +6,9 @@ public class Patient extends User{
     private boolean onARTMedication;
     private String startARTDate;
 
-    public Patient(String email, String password) {
-        super(null,null, email, password, Role.PATIENT);
-    }
+    // public Patient(String email, String password) {
+    //     super(null,null, email, password);
+    // }
 
     public Patient(
             String email,
@@ -19,7 +19,7 @@ public class Patient extends User{
             String hivDiagnosisDate,
             boolean onARTMedication,
             String startARTDate){
-        super(null, null, email, password, Role.PATIENT);
+        super(null, null, email, password);
         this.dateOfBirth = dateOfBirth;
         this.countryISOcode = countryISOcode;
         this.isHIVPositive = isHIVPositive;
