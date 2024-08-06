@@ -31,6 +31,11 @@ public class App {
                 case 2:
                     user = Menus.loginPage(scanner, Role.ADMIN);
                   break;
+
+                    // Handle new registration
+                    Menus.newRegistrationPage(scanner);1
+                    break;
+
                 case 3:
                     Menus.completeRegPage(scanner);
                     return;
