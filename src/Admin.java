@@ -9,11 +9,15 @@ public class Admin extends User {
     public void initiateReg(String email)  {
         try {
             UUID uuid = UUID.randomUUID();
-            System.out.println("Patient UUID: " + uuid.toString());
-            String[] user = new String[]{uuid.toString(), " ", " ",email};
-            UserManager.addUser(user);
+            if(uuid != null){
+                System.out.println("Registration Succesfull");
+                System.out.println("---------------------");
+                System.out.println("Patient email: " + email);
+                System.out.println("Patient UUID: " + uuid.toString());
+                String[] user = new String[]{uuid.toString(), " ", " ",email};
+                UserManager.addUser(user);
+            }
         } catch (Exception e) {
-
             System.err.println("Registration failed" + e.getMessage());
         }
     }
