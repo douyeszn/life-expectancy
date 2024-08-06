@@ -40,8 +40,34 @@ public class UserManager {
                 }
 }
 
-    public static boolean login(String email, String password) {
+    public static String login(String email, String password) {
         String[] cmd = new String[]{"resource/login.sh", email, password};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        String userData = "";
+
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            // if (exitCode == 1) {
+            //     System.out.println("login failed");
+            //     break;
+            // }
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            if((userData = reader.readLine()) != null){
+                return userData;
+            }
+        } catch (Exception e) {
+            System.err.println("An error occurred: " + e.getMessage());
+        }
+        return userData;
+    }
+
+    // get role from login info
+    public static Role getRole(String user){
+        String role = "";
+        String[] cmd = new String[]{"resource/getUserRole.sh", user};
         ProcessBuilder pb = new ProcessBuilder(cmd);
 
         try {
@@ -49,36 +75,21 @@ public class UserManager {
             int exitCode = process.waitFor();
 
             if (exitCode == 1) {
-                return false;
+                System.out.println("Failed to get user role");
+            }else{
+                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+                role = reader.readLine();
             }
-
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String user;
-
-            while ((user = reader.readLine()) != null) {
-                System.out.println(user);
-            }
-            return true;
-            // if(Role.ADMIN.equals(role)){
-            //     Admin admin = new Admin(Credentials.email, Credentials.password);
-            //     boolean isLoggedIn = admin.login();
-            //     if(!isLoggedIn){
-            //         return null;
-            //     }
-            //     user = admin;
-            // }else {
-            //     Patient patient = new Patient(Credentials.email, Credentials.password);
-            //     boolean isLoggedIn = patient.login();
-            //     if(!isLoggedIn){
-            //         return null;
-            //     }
-            //     user = patient;
-            // }
-        } catch (Exception e) {
-            System.err.println("An error occurred: " + e.getMessage());
+        }catch(Exception e){
+            System.err.println(e.getMessage());
         }
-        
-        return false;
+
+        if("ADMIN".equals(role)){
+            return Role.ADMIN;
+        }
+        else{
+            return Role.PATIENT;
+        }
     }
 
     public static Boolean findUser(String UUID){

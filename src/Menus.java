@@ -19,7 +19,8 @@ public class Menus {
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
         // User user = new User();
-        UserManager.login(Credentials.email, Credentials.password);
+        String data = UserManager.login(Credentials.email, Credentials.password);
+        System.out.println(data);
         System.out.println("***************************************");
         // User user;
         // return user;
