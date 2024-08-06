@@ -6,7 +6,6 @@ public class App {
         Scanner scanner = new Scanner(System.in);
         System.out.println("running");
 
-
         while (true) {
             Menus.homePage();
 
@@ -26,12 +25,12 @@ public class App {
             User user = null;
             switch (option) {
                 case 1:
-                    user = Menus.loginPage(scanner, Role.PATIENT);
+                    Menus.loginPage(scanner);
                     break;
+                // case 2:
+                //     // Menus.loginPage(scanner);
+                //   break;
                 case 2:
-                    user = Menus.loginPage(scanner, Role.ADMIN);
-                  break;
-                case 3:
                     Menus.completeRegPage(scanner);
                     return;
                 default:
@@ -40,17 +39,13 @@ public class App {
             }
 
 
-            if(user != null){
-                Role loggedInRole = user.getRole();
-                if (loggedInRole == Role.ADMIN) {
-                    Menus.adminPage(scanner, user);
-            }
-
-
-
+            // if(user != null){
+            //     Role loggedInRole = user.getRole();
+            //     if (loggedInRole == Role.ADMIN) {
+            //         // Menus.adminPage(scanner, user);
+            //         System.out.println("done +++++++++++");
+            // }
         }
-
         scanner.close();
-
     }
 }

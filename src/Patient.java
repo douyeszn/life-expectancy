@@ -29,6 +29,6 @@ public class Patient extends User{
     }
 
     public boolean login(){
-         return UserManager.login(this.email, this.password, Role.PATIENT);
+         return UserManager.login(this.email, this.password);
     }
 }

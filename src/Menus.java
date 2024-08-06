@@ -5,24 +5,24 @@ public class Menus {
     public static void homePage() {
         System.out.println();
         System.out.println("********** HIV Life Expectancy **********");
-        System.out.println("1. Login as Patient");
-        System.out.println("2. Login as Admin");
-        System.out.println("3. Complete Registration");
+        System.out.println("1. Login");
+        System.out.println("2. Complete Registration");
         System.out.println("*****************************************");
         System.out.print("> ");
     }
     
-    public static User loginPage(Scanner scanner, Role role) throws IOException, InterruptedException {
+    public static void loginPage(Scanner scanner) throws IOException, InterruptedException {
         System.out.println();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
-        System.out.println();
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
-        User user;
+        // User user = new User();
+        UserManager.login(Credentials.email, Credentials.password);
         System.out.println("***************************************");
-        return user;
+        // User user;
+        // return user;
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {

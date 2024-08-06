@@ -40,8 +40,8 @@ public class UserManager {
                 }
 }
 
-    public static boolean login(String email, String password, Role role) {
-        String[] cmd = new String[]{"resource/login.sh", email, password, role.toString()};
+    public static boolean login(String email, String password) {
+        String[] cmd = new String[]{"resource/login.sh", email, password};
         ProcessBuilder pb = new ProcessBuilder(cmd);
 
         try {
@@ -55,25 +55,25 @@ public class UserManager {
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String user;
 
-            // while ((user = reader.readLine()) != null) {
-            //     System.out.println(user);
-            // }
-
-            if(Role.ADMIN.equals(role)){
-                Admin admin = new Admin(Credentials.email, Credentials.password);
-                boolean isLoggedIn = admin.login();
-                if(!isLoggedIn){
-                    return null;
-                }
-                user = admin;
-            }else {
-                Patient patient = new Patient(Credentials.email, Credentials.password);
-                boolean isLoggedIn = patient.login();
-                if(!isLoggedIn){
-                    return null;
-                }
-                user = patient;
+            while ((user = reader.readLine()) != null) {
+                System.out.println(user);
             }
+            return true;
+            // if(Role.ADMIN.equals(role)){
+            //     Admin admin = new Admin(Credentials.email, Credentials.password);
+            //     boolean isLoggedIn = admin.login();
+            //     if(!isLoggedIn){
+            //         return null;
+            //     }
+            //     user = admin;
+            // }else {
+            //     Patient patient = new Patient(Credentials.email, Credentials.password);
+            //     boolean isLoggedIn = patient.login();
+            //     if(!isLoggedIn){
+            //         return null;
+            //     }
+            //     user = patient;
+            // }
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }

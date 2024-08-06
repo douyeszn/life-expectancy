@@ -23,7 +23,7 @@ public class Admin extends User {
     }
 
     public boolean login(){
-        return UserManager.login(this.email, this.password, Role.ADMIN);
+        return UserManager.login(this.email, this.password);
     }
 
 
