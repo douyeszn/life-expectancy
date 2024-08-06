@@ -31,7 +31,6 @@ public class App {
                 case 2:
                     user = Menus.loginPage(scanner, Role.ADMIN);
                   break;
-
                 case 3:
                     Menus.completeRegPage(scanner);
                     return;

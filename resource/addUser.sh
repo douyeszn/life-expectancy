@@ -2,6 +2,7 @@
 argsCount=$#
 
 argCounter=1
+echo "" >> user-store.txt
 for i in "$@"
 do
    if [ $argCounter -eq 5 ]; then
@@ -14,6 +15,5 @@ do
     echo -n "${i}," >> user-store.txt
   fi
   argCounter=$((argCounter + 1))
-  echo ""
 done
-echo "" >> user-store.txt
+# echo "" >> user-store.txt
