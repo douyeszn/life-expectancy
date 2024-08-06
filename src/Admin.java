@@ -26,6 +26,7 @@ public class Admin extends User {
         try {
             UUID uuid = UUID.randomUUID();
             if(uuid != null){
+                System.out.println("--------------------------");
                 System.out.println("Patient UUID: " + uuid.toString());
                 // String[] user = new String[]{uuid.toString(), " ", " ",email};
                 // UserManager.addUser(user);

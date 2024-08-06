@@ -22,10 +22,16 @@ public class App {
 
             switch (option) {
                 case 1:
+                    String userData;
                     Role role;
-                    role = Menus.loginPage(scanner);
+                    userData = Menus.loginPage(scanner);
+                    role = User.getRole(userData);
                     if(role.equals(Role.ADMIN)){
-                        Menus.adminPage(scanner, null);
+                        Admin admin = new Admin(
+                            User.getDataField(userData, DataStructure.email.getValue()),
+                            User.getDataField(userData, DataStructure.password.getValue())
+                            );
+                        Menus.adminPage(scanner, admin);
                     }
                     break;
                 case 2:
