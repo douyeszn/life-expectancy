@@ -18,7 +18,7 @@ public class Patient extends User{
             boolean isHIVPositive,
             String hivDiagnosisDate,
             boolean onARTMedication,
-            String startARTDate) {
+            String startARTDate){
         super(null, null, email, password, Role.PATIENT);
         this.dateOfBirth = dateOfBirth;
         this.countryISOcode = countryISOcode;

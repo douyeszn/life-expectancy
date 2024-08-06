@@ -21,22 +21,6 @@ public class Menus {
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
         User user;
-        if(Role.ADMIN.equals(role)){
-            Admin admin = new Admin(Credentials.email, Credentials.password);
-            boolean isLoggedIn = admin.login();
-            if(!isLoggedIn){
-                return null;
-            }
-            user = admin;
-        }else {
-            Patient patient = new Patient(Credentials.email, Credentials.password);
-            boolean isLoggedIn = patient.login();
-            if(!isLoggedIn){
-                return null;
-            }
-            user = patient;
-
-        }
         System.out.println("***************************************");
         return user;
     }
@@ -47,10 +31,32 @@ public class Menus {
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
         admin.initiateReg(Credentials.email);
-
         System.out.println("***************************************");
     }
-
+    public static void adminPage(Scanner scanner, Admin admin){
+        System.out.println();
+        System.out.println("********** Admin Menu - Choose option **********");
+        System.out.println("1. Register New user");
+        // System.out.println("2. Register New Admin");
+        System.out.println("3. Export data");
+        System.out.println("************************************************");
+        System.out.print("> ");
+        int adminOption = scanner.nextInt();
+        scanner.nextLine();
+        switch (adminOption) {
+            case 1:
+                newRegistrationPage(scanner, admin);
+                break;
+            case 2:
+                break;
+            case 3:
+                // export user date, export admindata
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+                break;
+        }
+}
     public static void completeRegPage(Scanner scanner) {
         System.out.println();
         System.out.println("**************** Complete Registration ****************");

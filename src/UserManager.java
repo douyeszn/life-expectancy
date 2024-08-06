@@ -17,28 +17,28 @@ public class UserManager {
             String startARTDate,
             String email,
             String password,
-            String diagnosisDate) {
-try{
-    String[] userDetails = new String[]{
-                uuid,
-                firstName,
-                lastName,
-                email,
-                password,
-                Role.PATIENT.toString(),
-                dateOfBirth,
-                countryISO,
-                Boolean.toString(isHIVPositive),
-                diagnosisDate,
-                Boolean.toString(onARTMedication),
-                startARTDate
-        };
+            String diagnosisDate){
+                try{
+                    String[] userDetails = new String[]{
+                            uuid,
+                            firstName,
+                            lastName,
+                            email,
+                            password,
+                            Role.PATIENT.toString(),
+                            dateOfBirth,
+                            countryISO,
+                            Boolean.toString(isHIVPositive),
+                            diagnosisDate,
+                            Boolean.toString(onARTMedication),
+                            startARTDate
+                    };
 
-        UserManager.addUser(userDetails);
-} catch (Exception e) {
-    System.err.println("An error occurred: " + e.getMessage());
+                        UserManager.addUser(userDetails);
+                }catch (Exception e) {
+                    System.err.println("An error occurred: " + e.getMessage());
+                }
 }
-    }
 
     public static boolean login(String email, String password, Role role) {
         String[] cmd = new String[]{"resource/login.sh", email, password, role.toString()};
@@ -55,19 +55,33 @@ try{
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String user;
 
-            while ((user = reader.readLine()) != null) {
-                System.out.println(user);
+            // while ((user = reader.readLine()) != null) {
+            //     System.out.println(user);
+            // }
+
+            if(Role.ADMIN.equals(role)){
+                Admin admin = new Admin(Credentials.email, Credentials.password);
+                boolean isLoggedIn = admin.login();
+                if(!isLoggedIn){
+                    return null;
+                }
+                user = admin;
+            }else {
+                Patient patient = new Patient(Credentials.email, Credentials.password);
+                boolean isLoggedIn = patient.login();
+                if(!isLoggedIn){
+                    return null;
+                }
+                user = patient;
             }
-
-            return true;
-
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }
+        
         return false;
     }
 
-    public static Boolean findUser(String UUID) {
+    public static Boolean findUser(String UUID){
         String user = null;
         try {
             String[] cmd = new String[]{"resource/findUser.sh", UUID};
