@@ -23,7 +23,6 @@ if [ "$role" != "$storedRole" ]; then
 fi
 
 if [ "$hashPwd" == "$storedPwd" ]; then
-  echo Use
   exit 0
 else
   echo "Incorrect password"
