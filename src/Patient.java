@@ -27,8 +27,4 @@ public class Patient extends User{
         this.onARTMedication = onARTMedication;
         this.startARTDate = startARTDate;
     }
-
-    public boolean login(){
-         return UserManager.login(this.email, this.password);
-    }
 }

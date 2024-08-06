@@ -11,19 +11,18 @@ public class Menus {
         System.out.print("> ");
     }
     
-    public static void loginPage(Scanner scanner) throws IOException, InterruptedException {
+    public static Role loginPage(Scanner scanner) throws IOException, InterruptedException {
         System.out.println();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
-        // User user = new User();
-        String data = UserManager.login(Credentials.email, Credentials.password);
-        System.out.println(data);
         System.out.println("***************************************");
-        // User user;
-        // return user;
+        String data = User.login(Credentials.email, Credentials.password);
+        System.out.println(data);
+        Role role = User.getRole(data);
+        return role;
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {

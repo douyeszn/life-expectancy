@@ -22,14 +22,10 @@ public class App {
                 continue;
             }
 
-            User user = null;
             switch (option) {
                 case 1:
                     Menus.loginPage(scanner);
                     break;
-                // case 2:
-                //     // Menus.loginPage(scanner);
-                //   break;
                 case 2:
                     Menus.completeRegPage(scanner);
                     return;
@@ -37,14 +33,6 @@ public class App {
                     System.out.println("Invalid option. Please try again.");
                     return;
             }
-
-
-            // if(user != null){
-            //     Role loggedInRole = user.getRole();
-            //     if (loggedInRole == Role.ADMIN) {
-            //         // Menus.adminPage(scanner, user);
-            //         System.out.println("done +++++++++++");
-            // }
         }
         scanner.close();
     }

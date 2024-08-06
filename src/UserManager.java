@@ -33,64 +33,11 @@ public class UserManager {
                             Boolean.toString(onARTMedication),
                             startARTDate
                     };
-
-                        UserManager.addUser(userDetails);
+                UserManager.addUser(userDetails);
                 }catch (Exception e) {
                     System.err.println("An error occurred: " + e.getMessage());
                 }
-}
-
-    public static String login(String email, String password) {
-        String[] cmd = new String[]{"resource/login.sh", email, password};
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-        String userData = "";
-
-        try {
-            Process process = pb.start();
-            int exitCode = process.waitFor();
-
-            // if (exitCode == 1) {
-            //     System.out.println("login failed");
-            //     break;
-            // }
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
-            if((userData = reader.readLine()) != null){
-                return userData;
             }
-        } catch (Exception e) {
-            System.err.println("An error occurred: " + e.getMessage());
-        }
-        return userData;
-    }
-
-    // get role from login info
-    public static Role getRole(String user){
-        String role = "";
-        String[] cmd = new String[]{"resource/getUserRole.sh", user};
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-
-        try {
-            Process process = pb.start();
-            int exitCode = process.waitFor();
-
-            if (exitCode == 1) {
-                System.out.println("Failed to get user role");
-            }else{
-                BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                role = reader.readLine();
-            }
-        }catch(Exception e){
-            System.err.println(e.getMessage());
-        }
-
-        if("ADMIN".equals(role)){
-            return Role.ADMIN;
-        }
-        else{
-            return Role.PATIENT;
-        }
-    }
 
     public static Boolean findUser(String UUID){
         String user = null;

@@ -21,10 +21,4 @@ public class Admin extends User {
             System.err.println("Registration failed" + e.getMessage());
         }
     }
-
-    public boolean login(){
-        return UserManager.login(this.email, this.password);
-    }
-
-
 }
