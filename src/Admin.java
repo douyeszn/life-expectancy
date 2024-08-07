@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.UUID;
 
 
@@ -6,30 +8,12 @@ public class Admin extends User {
         super(null, null, email, password);
     }
 
-    public void initiateReg(String email){
-        try {
-            UUID uuid = UUID.randomUUID();
-            if(uuid != null){
-                System.out.println("Registration Succesfull");
-                System.out.println("---------------------");
-                System.out.println("Patient email: " + email);
-                System.out.println("Patient UUID: " + uuid.toString());
-                String[] user = new String[]{uuid.toString(), " ", " ",email};
-                UserManager.addUser(user);
-            }
-        } catch (Exception e) {
-            System.err.println("Registration failed" + e.getMessage());
-        }
-    }
-
     public boolean newPatientReg(){
         try {
             UUID uuid = UUID.randomUUID();
             if(uuid != null){
-                System.out.println("--------------------------");
+                System.out.println("---------------------------------------");
                 System.out.println("Patient UUID: " + uuid.toString());
-                // String[] user = new String[]{uuid.toString(), " ", " ",email};
-                // UserManager.addUser(user);
                 return true;
             }
         } catch (Exception e) {
@@ -37,5 +21,22 @@ public class Admin extends User {
             return false;
         }
         return false;
+    }
+
+    public void addDataField(String data, int field){
+        String[] cmd = new String[]{"resource/addUserData.sh", data, Integer.toString(field)};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            if (exitCode == 1) {
+                System.out.println("Failed to add data");
+            }else{
+                System.out.println("Added data successfully");
+            }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
     }
 }

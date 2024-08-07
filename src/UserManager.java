@@ -75,7 +75,7 @@ public class UserManager {
             Process process = pb.start();
             BufferedReader reader = new BufferedReader(new InputStreamReader( process.getInputStream()));
             String s;
-            while((s=reader.readLine())!= null) {
+            while((s=reader.readLine())!= null){
                 System.out.println(s);
             }
         }catch (IOException e){
