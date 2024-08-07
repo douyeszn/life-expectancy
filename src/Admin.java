@@ -39,4 +39,39 @@ public class Admin extends User {
             System.err.println(e.getMessage());
         }
     }
+
+    public void downloadUsers(){
+        String[] cmd = new String[]{"resource/exportUsers.sh"};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+//        pb.directory(new File("path/to/correct/directory"));
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            String s;
+            while ((s = stdOutput.readLine()) != null) {
+                System.out.println(s);
+            }
+
+            if (exitCode != 0) {
+                System.out.println("User export failed with");
+                while ((s = stdError.readLine()) != null) {
+                    System.err.println(s);
+                }
+            } else {
+                System.out.println("Users have been exported successfully.");
+            }
+
+//            if (exitCode == 1) {
+//                System.out.println("Users have been exported.");
+//            }else{
+//                System.out.println("User export failed.");
+//            }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
 }

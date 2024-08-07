@@ -56,7 +56,7 @@ public class Menus {
             case 2:
                 break;
             case 3:
-                // export user date, export admindata
+                exportDataPage(scanner, admin);
                 break;
             case 0:
                 System.out.println("Logging out...");
@@ -119,5 +119,12 @@ public class Menus {
         }
 
         System.out.println("***************************************");
+    }
+
+    public static void exportDataPage(Scanner scanner, Admin admin){
+//        System.out.println();
+//        System.out.println("********* Complete Registration *********");
+//        System.out.print("Enter UUID > ");
+        admin.downloadUsers();
     }
 }
