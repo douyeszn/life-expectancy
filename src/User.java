@@ -128,7 +128,6 @@ public abstract class User {
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }
-
         return false;
     }
 }

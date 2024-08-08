@@ -13,7 +13,7 @@ public class Admin extends User {
     }
 
     public static void addUser(String[] userData) throws IOException {
-      String[] cmd = new String[]{"resources/addUser.sh"};
+    //   String[] cmd = new String[]{"resources/addUser.sh"};
         List<String> listOfArgs = new ArrayList<>();
         listOfArgs.add("resource/addUser.sh");
 
@@ -78,7 +78,6 @@ public class Admin extends User {
             System.err.println(e.getMessage());
         }
     }
-
 
     public void downloadUsers(){
         String[] cmd = new String[]{"resource/exportUsers.sh"};
