@@ -25,21 +25,36 @@ public class App {
                     String userData;
                     Role role;
                     userData = Menus.loginPage(scanner);
+                    System.out.println("--debug"+userData);
                     role = User.getRole(userData);
-                    if(role.equals(Role.ADMIN)){
+                    if(role == null) {
+                        System.out.println("user not found");
+                        Menus.loginPage(scanner);
+                    }
+                    else if(role.equals(Role.ADMIN)){
                         Admin admin = new Admin(
                             User.getDataField(userData, DataStructure.email.getValue()),
                             User.getDataField(userData, DataStructure.password.getValue())
                             );
-                        // admin.addDataField("hello", 2);
                         Menus.adminPage(scanner, admin);
+                    }else if(role.equals(Role.PATIENT)){
+                        System.out.println("User loged in");
+                        Menus.patientPage(scanner);
+                    }else{
+                        System.out.println("============+++++");
                     }
                     break;
                 case 2:
-                    Menus.completeRegPage(scanner);
+                    if(Menus.completeRegPage(scanner) == true) {
+                        Menus.loginPage(scanner);
+                    }else{
+                        System.out.println("Registrations failed, try again");
+                        Menus.completeRegPage(scanner);
+                    }
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
+                    Menus.loginPage(scanner);
                     return;
             }
         }
