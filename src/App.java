@@ -27,15 +27,19 @@ public class App {
                     Role role;
                     userData = Menus.loginPage(scanner);
                     role = User.getRole(userData);
-                    if(role.equals(Role.ADMIN)) {
+                    if(role == null) {
+                        System.out.println("user not found");
+                        Menus.loginPage(scanner);
+                    }
+                    if(role.equals(Role.ADMIN)){
                         Admin admin = new Admin(
-                                User.getDataField(userData, DataStructure.email.getValue()),
-                                User.getDataField(userData, DataStructure.password.getValue())
-                        );
-                        admin.addDataField("hello", 2);
+                            User.getDataField(userData, DataStructure.email.getValue()),
+                            User.getDataField(userData, DataStructure.password.getValue())
+                            );
+                        // admin.addDataField("hello", 2);
                         Menus.adminPage(scanner, admin);
-                    }else{
-                        Map<String, String>  userMap = new UserMap(userData).getUserMap();
+                    }else if(role.equals(Role.PATIENT)){
+                        Map<String, String> userMap = new UserMap(userData).getUserMap();
 
                         Patient patient = new Patient(
                                 userMap.get("email"),
@@ -47,12 +51,16 @@ public class App {
                                 Boolean.parseBoolean(userMap.get("onARTMedication")),
                                 userMap.get("startARTDate")
                         );
-
-                        patient.calculateLifeSpan();
+                        Menus.patientPage(scanner);
                     }
                     break;
                 case 2:
-                    Menus.completeRegPage(scanner);
+                    if(Menus.completeRegPage(scanner) == true) {
+                        Menus.loginPage(scanner);
+                    }else{
+                        System.out.println("Registrations failed, try again");
+                        Menus.completeRegPage(scanner);
+                    }
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");

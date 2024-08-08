@@ -1,0 +1,2 @@
+UUID,firstName,lastName, email, password, role, dateofBirth, countryISO, isHIVPositive, DiagnosisDate, onARTMed, startARTDate, daysToLive
+003,Jean,Doe,jean@cmu.edu,PATIENT,null,null,null,null,null,null,null,
