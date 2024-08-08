@@ -82,6 +82,9 @@ public class Menus {
                 System.out.println("Logging out...");
                 break;
 
+                default:
+                System.out.println("Invalid input");
+                continue;
             }
         }while (choice != 0);
     }

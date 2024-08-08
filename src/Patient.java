@@ -70,6 +70,7 @@ public class Patient extends User{
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
         System.out.printf(format, "Days to live", User.getDataField(data, DataStructure.daysToLive.getValue()));
         System.out.println("**************************************");
+        System.out.println("0. Logout 1. Update data");
     }
     
     
