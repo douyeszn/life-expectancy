@@ -127,4 +127,8 @@ public class Menus {
 //        System.out.print("Enter UUID > ");
         admin.downloadUsers();
     }
+
+    public static void getLifeSpan (Patient patient){
+        patient.calculateLifeSpan();
+    }
 }

@@ -6,7 +6,7 @@ pwd=$2
 userRow=$(awk -F',' '$4 == "'"$email"'" {print $0}' ./user-store.txt)
 
 if [ -z "$userRow" ]; then
-  echo "Login failed: UUID not found"
+  echo "Login failed: Email not found"
   exit 1
 fi
 
@@ -16,11 +16,6 @@ salt="gishwati"
 hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
 
 storedRole=$(echo "$userRow" | cut -d ',' -f6)
-
-# if [ "$role" != "$storedRole" ]; then
-#   echo "User does not exist."
-#   exit 0
-# fi
 
 if [ "$hashPwd" == "$storedPwd" ]; then
   echo "$userRow"

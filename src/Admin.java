@@ -33,7 +33,7 @@ public class Admin extends User {
             if (exitCode == 1) {
                 System.out.println("Failed to add data");
             }else{
-                System.out.println("Added data successfully");
+//                System.out.println("Added data successfully");
             }
         }catch(Exception e){
             System.err.println(e.getMessage());

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -26,13 +27,28 @@ public class App {
                     Role role;
                     userData = Menus.loginPage(scanner);
                     role = User.getRole(userData);
-                    if(role.equals(Role.ADMIN)){
+                    if(role.equals(Role.ADMIN)) {
                         Admin admin = new Admin(
-                            User.getDataField(userData, DataStructure.email.getValue()),
-                            User.getDataField(userData, DataStructure.password.getValue())
-                            );
-                        // admin.addDataField("hello", 2);
+                                User.getDataField(userData, DataStructure.email.getValue()),
+                                User.getDataField(userData, DataStructure.password.getValue())
+                        );
+                        admin.addDataField("hello", 2);
                         Menus.adminPage(scanner, admin);
+                    }else{
+                        Map<String, String>  userMap = new UserMap(userData).getUserMap();
+
+                        System.out.println(userMap);
+
+                        Patient patient = new Patient(
+                                userMap.get("email"),
+                                userMap.get("password"),
+                                userMap.get("dateOfBirth"),
+                                userMap.get("countryISO"),
+                                Boolean.parseBoolean(userMap.get("isHIVPositive")),
+                                userMap.get("DiagnosisDate"),
+                                Boolean.parseBoolean(userMap.get("onARTMedication")),
+                                userMap.get("startARTDate")
+                        );
                     }
                     break;
                 case 2:
