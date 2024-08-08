@@ -36,10 +36,7 @@
 # # Replace the original file with the modified data
 # mv "$TEMP_FILE" "$FILE"
 
-# echo "Updated row with UUID '$UUID' in column $POSITION with new content '$NEW_CONTENT'."
-#!/bin/bash
-
-# Check if the correct number of arguments are provided
+# echo "Updated row with UUID '$UUID' in column $POSITION with new content '$NEW_CONTENT'."#!/bin/bash
 
 # Check if the correct number of arguments are provided
 if [ "$#" -ne 4 ]; then
@@ -59,24 +56,14 @@ if [[ "$POSITION" -lt 1 || "$POSITION" -gt 13 ]]; then
     exit 1
 fi
 
-# Hash the NEW_CONTENT if it's the 5th argument (change logic if needed)
-argCounter=0
-i="$NEW_CONTENT"
-
-# Increment counter and apply conditional hashing
-((argCounter++))
-if [ "$argCounter" -eq 5 ]; then
-    i=$(openssl passwd -6 "$i")
-fi
-
 # Columns to skip (positions 1, 4, 6, and 13)
 SKIP_COLUMNS="1 4 6 13"
 
 # Temporary file to hold modified data
 TEMP_FILE=$(mktemp)
 
-# Use awk to replace the value in the specified column for the specified UUID
-awk -v uuid="$UUID" -v new_content="$i" -v position="$POSITION" -v skip_columns="$SKIP_COLUMNS" -F, -v OFS=',' '
+# Use awk to process the file and hash the 5th column if needed
+awk -v uuid="$UUID" -v new_content="$NEW_CONTENT" -v position="$POSITION" -v skip_columns="$SKIP_COLUMNS" -F, -v OFS=',' '
 BEGIN {
     split(skip_columns, skips, " ");
     pos = position;
@@ -91,12 +78,24 @@ BEGIN {
         }
     }
     
-    # Update the field if the column is not in the skip list
-    if ($1 == uuid && !skip) {
-        $pos = new_content;
+    # Hash the content of the 5th field if necessary
+    if (NR == 1) { 
+        # Optionally, you can do something for the header if your file has one
+        print $0;
+    } else {
+        if ($1 == uuid && !skip) {
+            if (pos == 5) {
+                # Hash the value of the 5th column
+                cmd = "echo \"" $pos "\" | openssl passwd -6 -stdin";
+                cmd | getline hashed_value;
+                close(cmd);
+                $pos = hashed_value;
+            } else {
+                $pos = new_content;
+            }
+        }
+        print $0;
     }
-    
-    print $0;
 }' "$FILE" > "$TEMP_FILE"
 
 # Replace the original file with the modified data

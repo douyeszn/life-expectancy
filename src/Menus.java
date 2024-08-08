@@ -125,21 +125,22 @@ public class Menus {
                 startARTDate
             );
 
-            if(regStatus == true) {
+            if(regStatus != true) {
+                System.out.println("Registration failed");
+                return false;
+            }else{
                 System.out.println("Registration complete!");
-                return true;
             }
-
-            
         } else {
             System.out.println("User does not exist.");
+            return false;
         }
-
         System.out.println("***************************************");
-        return false;
+        return true;
     }
 
     public static void exportDataPage(Scanner scanner, Admin admin){
         admin.downloadUsers();
     }
+
 }

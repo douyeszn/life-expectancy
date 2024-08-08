@@ -1,3 +1,3 @@
-UUID,firstName,lastName, email, password, role, dateofBirth, countryISO, isHIVPositive, DiagnosisDate, onARTMed, startARTDate, daysToLive
+UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive,DiagnosisDate,onARTMed,startARTDate,daysToLive
 001,hiro,admin,a@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,ADMIN,null,null,null,null,null,null,null
-582d2421-a928-4b24-b355-cbd409de56c5,attah,hiro,b@cmu.edu,48214,PATIENT,03051999,USD,false,,false,null,null
+7c6e0575-4b49-4220-ac71-274c6263d9c0,bb,cc,b@cmu.edu,$6$lV5WgPBOnO0xGPpM$dp3gPYo72s6.Qp/yqr/W7PLsrNP0ElBl7gVBQ2j5z0bmHPs6Sf/URqz.atO9EIupjx3fSXD4OyAPR0hcMlXVO.,PATIENT,44,dd,true,55,true,55,null

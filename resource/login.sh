@@ -15,12 +15,8 @@ storedPwd=$(echo "$userRow" | cut -d ',' -f5)
 salt="gishwati"
 hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
 
-storedRole=$(echo "$userRow" | cut -d ',' -f6)
+# storedRole=$(echo "$userRow" | cut -d ',' -f6)
 
-# if [ "$role" != "$storedRole" ]; then
-#   echo "User does not exist."
-#   exit 0
-# fi
 
 if [ "$hashPwd" == "$storedPwd" ]; then
   echo "$userRow"

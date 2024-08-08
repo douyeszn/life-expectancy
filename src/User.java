@@ -23,15 +23,15 @@ public abstract class User {
 
         try {
             Process process = pb.start();
-            int exitCode = process.waitFor();
+            // int exitCode = process.waitFor();
 
-            if (exitCode == 1) {
-                System.out.println("login failed");
-            }
+            // if (exitCode == 1) {
+            //     System.out.println("login failed");
+            // }
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            if((userData = reader.readLine()) != null){
-                return userData;
+            if((userData = reader.readLine()) == null){
+                return null;
             }
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
@@ -60,21 +60,21 @@ public abstract class User {
     }
 
     // get role from login info
-    public static Role getRole(String data){
+    public static Role getRole(String data) {
         String role = getDataField(data, DataStructure.role.getValue());
-        String roleString = role.toUpperCase();
     
+        
+        String roleString = role.toUpperCase();
+        
         if (roleString.equals(Role.ADMIN.toString())) {
             return Role.ADMIN;
-        } else if (roleString.equals("PATIENT")) {
+        } else if (roleString.equals(Role.PATIENT.toString())) {
             return Role.PATIENT;
-        } else {
-            System.out.println(Role.ADMIN.toString());
-            System.out.println("Invalid role found: " + role);
+        }else{
+            System.out.println("++getRole: Role not found");
             return null;
         }
     }
-
 
     public static boolean updateDataField(String file, String uuid, String newContent, int position) {
         try {
