@@ -67,22 +67,32 @@ public class Menus {
         }}while(choice != 0);
     }
 
-    public static void completeRegPage(Scanner scanner) {
+    public static void patientPage(Scanner scanner) {
+        System.out.println("you are a patient");
+    }
+
+    public static boolean completeRegPage(Scanner scanner) {
         System.out.println();
         System.out.println("********* Complete Registration *********");
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
         Boolean isUser = UserManager.findUser(uuid);
         if (isUser) {
+            System.out.print("Enter Firstname > ");
+            String firstName = scanner.nextLine();
+            
+            System.out.print("Enter Lastname > ");
+            String lastName = scanner.nextLine();
+
             System.out.print("Enter Date of Birth (YYYY-MM-DD) > ");
             String dateOfBirth = scanner.nextLine();
 
-            System.out.print("Is the user HIV Positive? (true/false) > ");
+            System.out.print("Are you HIV Positive? (true/false) > ");
             boolean isHIVPositive = Boolean.parseBoolean(scanner.nextLine());
 
             String diagnosisDate = "";
             if (isHIVPositive) {
-                System.out.print("Enter Diagnosis Date (YYYY-MM-DD) > ");
+                System.out.print("Enter date diagnosed (YYYY-MM-DD) > ");
                 diagnosisDate = scanner.nextLine();
             }
 
@@ -91,40 +101,47 @@ public class Menus {
 
             String startARTDate = null;
             if (onARTMedication) {
-                System.out.print("Enter Start ART Date (YYYY-MM-DD) > ");
+                System.out.print("Enter ART start date (YYYY-MM-DD) > ");
                 startARTDate = scanner.nextLine();
             }
 
-            System.out.print("Enter Country ISO Code > ");
+            System.out.print("Enter Country ISO Code (ABC) > ");
             String countryISO = scanner.nextLine();
+            
+            System.out.print("Enter new password > ");
+            String password = scanner.nextLine();
 
-            UserManager.completeRegistration(
+
+            boolean regStatus = UserManager.completeRegistration(
                     uuid,
-                    "John",
-                    "Doe",
+                    firstName,
+                    lastName,
                     dateOfBirth,
                     isHIVPositive,
                     onARTMedication,
                     countryISO,
                     startARTDate,
                     Credentials.email,
-                    "1234",
+                    password,
                     diagnosisDate
 
             );
 
-            System.out.println("Registration complete!");
+            if(regStatus == true) {
+                System.out.println("Registration complete!");
+                return true;
+            }
+
+            
         } else {
             System.out.println("User does not exist.");
         }
 
         System.out.println("***************************************");
+        return false;
     }
 
     public static void exportDataPage(Scanner scanner, Admin admin){
-//        System.out.println();
-//        System.out.println("********* Complete Registration *********");
-//        System.out.print("Enter UUID > ");
         admin.downloadUsers();
     }
 }

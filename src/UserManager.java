@@ -6,7 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class UserManager {
-    public static void completeRegistration(
+    public static boolean completeRegistration(
             String uuid,
             String firstName,
             String lastName,
@@ -34,8 +34,10 @@ public class UserManager {
                             startARTDate
                     };
                 UserManager.addUser(userDetails);
+                return true;
                 }catch (Exception e) {
                     System.err.println("An error occurred: " + e.getMessage());
+                    return false;
                 }
             }
 

@@ -39,6 +39,23 @@ public class Admin extends User {
             System.err.println(e.getMessage());
         }
     }
+    
+    public void updateDataField(String file, String uuid,  String data, int field){
+        String[] cmd = new String[]{"resource/updateUserData.sh", file, uuid, data, Integer.toString(field)};
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            if (exitCode == 1) {
+                System.out.println("Failed to update data");
+            }else{
+                System.out.println("updated data successfully");
+            }
+        }catch(Exception e){
+            System.err.println(e.getMessage());
+        }
+    }
 
     public void downloadUsers(){
         String[] cmd = new String[]{"resource/exportUsers.sh"};

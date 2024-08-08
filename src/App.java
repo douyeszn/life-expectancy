@@ -31,12 +31,19 @@ public class App {
                             User.getDataField(userData, DataStructure.email.getValue()),
                             User.getDataField(userData, DataStructure.password.getValue())
                             );
-                        // admin.addDataField("hello", 2);
+                        admin.updateDataField("user-store.txt", "001", "hiro", 3);
                         Menus.adminPage(scanner, admin);
+                    }else if(role.equals(Role.PATIENT)){
+
                     }
                     break;
                 case 2:
-                    Menus.completeRegPage(scanner);
+                    if(Menus.completeRegPage(scanner) == true) {
+                        Menus.loginPage(scanner);
+                    }else{
+                        Menus.completeRegPage(scanner);
+                    }
+
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
