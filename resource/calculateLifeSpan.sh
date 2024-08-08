@@ -1,6 +1,7 @@
-countryISO="DZA"
-yearsDelayedBeforeART="2"
-ageOfInfection="20"
+isHIVPositive="$1"
+age="$2"
+yearsDelayedBeforeART="$3"
+countryISO="$4"
 percentLifeDecrease="0.9"
 
 countryLifeSpan=$(awk -F',' '$6 == "'"$countryISO"'" {print $7}' ./life-expectancy.csv)
@@ -10,8 +11,20 @@ if [ -z "$countryLifeSpan" ]; then
     exit 1
 fi
 
-lifeSpan=$(echo "$countryLifeSpan - $ageOfInfection" | bc)
+if [ "$isHIVPositive" = false ]; then
+    echo "$countryLifeSpan"
+    exit 0
+fi
 
-powered=$(echo "scale=5; $percentLifeDecrease ^ $yearsDelayedBeforeART" | bc)
+if [ "$yearsDelayedBeforeART" -gt 5 ]; then
+    echo "0"
+    exit 0
+fi
 
-echo  "0.9  - $powered"
+lifeSpan=$(echo "$countryLifeSpan - $age" | bc)
+
+damping=$(echo "scale=3; $percentLifeDecrease ^ $yearsDelayedBeforeART" | bc)
+
+lifespan=$(echo "scale=1; $lifeSpan * $damping" | bc)
+
+echo  "$lifespan"

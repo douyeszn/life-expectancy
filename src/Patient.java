@@ -1,3 +1,6 @@
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
@@ -31,9 +34,36 @@ public class Patient extends User{
         this.startARTDate = startARTDate;
     }
 
+    public int calculateYearsBetweenDates(String startDateStr, String endDateStr, String dateFormat) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+
+        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
+        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+
+        Period period = Period.between(startDate, endDate);
+        return period.getYears();
+    }
+
     public int calculateLifeSpan(){
-//        double countryLifeSpan = getCountryLifeSpan(this.countryISOcode);
-        String[] cmd = new String[]{"resource/calculateLifeSpan.sh"};
+        String countryISO = this.getCountryISOcode();
+        boolean isHIVPositive = this.isHIVPositive();
+        String diagnosisDate = this.getHivDiagnosisDate();
+        String startARTDate = this.getStartARTDate();
+
+        String dateOfBirth = this.getDateOfBirth();
+        LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        int age = Period.between(dob, LocalDate.now()).getYears();
+
+        int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
+
+        String[] cmd = {
+                "bash",
+                "resource/calculateLifeSpan.sh",
+                String.valueOf(isHIVPositive),
+                String.valueOf(age),
+                String.valueOf(yearsDelayedBeforeART),
+                countryISO,
+        };
         ProcessBuilder pb = new ProcessBuilder(cmd);
         try {
             Process process = pb.start();
@@ -42,31 +72,30 @@ public class Patient extends User{
             BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
             BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-            String s;
-            while ((s = stdOutput.readLine()) != null) {
-                System.out.println(s);
+            StringBuilder outputBuilder = new StringBuilder();
+            String line;
+            while ((line = stdOutput.readLine()) != null) {
+                outputBuilder.append(line);
             }
 
             if (exitCode != 0) {
-//                System.out.println("User export failed with");
-                while ((s = stdError.readLine()) != null) {
-                    System.err.println(s);
+                while ((line = stdError.readLine()) != null) {
+                    System.err.println(line);
                 }
-            } else {
-                System.out.println("----------." + s);
+                throw new RuntimeException("Script execution failed with exit code " + exitCode);
             }
+
+            String lifespan = outputBuilder.toString().trim();
+            double lifespanDouble = Double.parseDouble(lifespan);
+            return (int) Math.round(lifespanDouble);
         }catch(Exception e){
             System.err.println(e.getMessage());
         }
-        return 10;
+        return 0;
     }
 
     public String getCountryISOcode() {
         return countryISOcode;
-    }
-
-    public void setCountryISOcode(String countryISOcode) {
-        this.countryISOcode = countryISOcode;
     }
 
     public boolean isHIVPositive() {

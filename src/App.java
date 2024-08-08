@@ -37,8 +37,6 @@ public class App {
                     }else{
                         Map<String, String>  userMap = new UserMap(userData).getUserMap();
 
-                        System.out.println(userMap);
-
                         Patient patient = new Patient(
                                 userMap.get("email"),
                                 userMap.get("password"),
@@ -49,6 +47,8 @@ public class App {
                                 Boolean.parseBoolean(userMap.get("onARTMedication")),
                                 userMap.get("startARTDate")
                         );
+
+                        patient.calculateLifeSpan();
                     }
                     break;
                 case 2:
