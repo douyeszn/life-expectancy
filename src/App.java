@@ -31,7 +31,7 @@ public class App {
                             User.getDataField(userData, DataStructure.email.getValue()),
                             User.getDataField(userData, DataStructure.password.getValue())
                             );
-                        admin.updateDataField("user-store.txt", "001", "hiro", 3);
+                        // User.updateDataField("user-store.txt", "001", "hiro", 3);
                         Menus.adminPage(scanner, admin);
                     }else if(role.equals(Role.PATIENT)){
 

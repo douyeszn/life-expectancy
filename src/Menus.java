@@ -31,7 +31,7 @@ public class Menus {
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
         // admin.initiateReg(Credentials.email);
-        admin.newPatientReg();
+        admin.newPatientReg(Credentials.email);
         System.out.println("***************************************");
     }
 
@@ -76,7 +76,7 @@ public class Menus {
         System.out.println("********* Complete Registration *********");
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
-        Boolean isUser = UserManager.findUser(uuid);
+        Boolean isUser = User.findUser(uuid);
         if (isUser) {
             System.out.print("Enter Firstname > ");
             String firstName = scanner.nextLine();
@@ -112,19 +112,17 @@ public class Menus {
             String password = scanner.nextLine();
 
 
-            boolean regStatus = UserManager.completeRegistration(
-                    uuid,
-                    firstName,
-                    lastName,
-                    dateOfBirth,
-                    isHIVPositive,
-                    onARTMedication,
-                    countryISO,
-                    startARTDate,
-                    Credentials.email,
-                    password,
-                    diagnosisDate
-
+            boolean regStatus = Patient.completeRegistration(
+                uuid, // UUID remains the same
+                firstName,
+                lastName,
+                password,
+                dateOfBirth,
+                countryISO,
+                isHIVPositive,
+                diagnosisDate,
+                onARTMedication,
+                startARTDate
             );
 
             if(regStatus == true) {

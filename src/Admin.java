@@ -1,5 +1,9 @@
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -8,12 +12,47 @@ public class Admin extends User {
         super(null, null, email, password);
     }
 
-    public boolean newPatientReg(){
+    public static void addUser(String[] userData) throws IOException {
+      String[] cmd = new String[]{"resources/addUser.sh"};
+        List<String> listOfArgs = new ArrayList<>();
+        listOfArgs.add("resource/addUser.sh");
+
+        listOfArgs.addAll(Arrays.asList(userData));
+        String[] args = listOfArgs.toArray(new String[0]);
+        ProcessBuilder pb = new ProcessBuilder(args);
+        try{
+            Process process = pb.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader( process.getInputStream()));
+            String s;
+            while((s=reader.readLine())!= null){
+                System.out.println(s);
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean newPatientReg(String email){
         try {
             UUID uuid = UUID.randomUUID();
             if(uuid != null){
                 System.out.println("---------------------------------------");
                 System.out.println("Patient UUID: " + uuid.toString());
+                String[] data = new String[] {
+                    uuid.toString(),
+                    "null",
+                    "null",
+                    email,
+                    "null",
+                    Role.PATIENT.toString(),
+                    "null",
+                    "null",
+                    "null",
+                    "null",
+                    "null",
+                    "null",
+                    "null"};
+                Admin.addUser(data);
                 return true;
             }
         } catch (Exception e) {
@@ -39,23 +78,7 @@ public class Admin extends User {
             System.err.println(e.getMessage());
         }
     }
-    
-    public void updateDataField(String file, String uuid,  String data, int field){
-        String[] cmd = new String[]{"resource/updateUserData.sh", file, uuid, data, Integer.toString(field)};
-        ProcessBuilder pb = new ProcessBuilder(cmd);
-        try {
-            Process process = pb.start();
-            int exitCode = process.waitFor();
 
-            if (exitCode == 1) {
-                System.out.println("Failed to update data");
-            }else{
-                System.out.println("updated data successfully");
-            }
-        }catch(Exception e){
-            System.err.println(e.getMessage());
-        }
-    }
 
     public void downloadUsers(){
         String[] cmd = new String[]{"resource/exportUsers.sh"};
