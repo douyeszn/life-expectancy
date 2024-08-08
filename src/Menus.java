@@ -4,56 +4,72 @@ import java.util.Scanner;
 public class Menus {
     public static void homePage() {
         System.out.println();
-        System.out.println("********** HIV Life Expectancy **********");
-        System.out.println("1. Login as Patient");
-        System.out.println("2. Login as Admin");
-        System.out.println("3. Complete Registration");
-        System.out.println("*****************************************");
+        System.out.println("********* HIV Life Expectancy *********");
+        System.out.println("1. Login");
+        System.out.println("2. Complete Registration");
+        System.out.println("***************************************");
         System.out.print("> ");
     }
     
-    public static User loginPage(Scanner scanner, Role role) throws IOException, InterruptedException {
+    public static String loginPage(Scanner scanner) throws IOException, InterruptedException {
         System.out.println();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
-        System.out.println();
         System.out.print("Enter password > ");
         Credentials.password = scanner.nextLine();
-        User user;
-        if(Role.ADMIN.equals(role)){
-            Admin admin = new Admin(Credentials.email, Credentials.password);
-            boolean isLoggedIn = admin.login();
-            if(!isLoggedIn){
-                return null;
-            }
-            user = admin;
-        }else {
-            Patient patient = new Patient(Credentials.email, Credentials.password);
-            boolean isLoggedIn = patient.login();
-            if(!isLoggedIn){
-                return null;
-            }
-            user = patient;
-
-        }
         System.out.println("***************************************");
-        return user;
+        String data = User.login(Credentials.email, Credentials.password);
+        // Role role = User.getRole(data);
+        return data;
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {
+        // Admin admin = new Admin(null, null);
         System.out.println();
         System.out.println("********** Register New User **********");
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
-        admin.initiateReg(Credentials.email);
-
+        // admin.initiateReg(Credentials.email);
+        admin.newPatientReg();
         System.out.println("***************************************");
+    }
+
+    public static void adminPage(Scanner scanner, Admin admin){
+        int choice;
+        do{
+        System.out.println();
+        System.out.println("************** Admin Menu **************");
+        System.out.println("1. Register New user");
+        System.out.println("2. Register New Admin");
+        System.out.println("3. Export data");
+        System.out.println("0. Logout");
+        System.out.println("****************************************");
+        System.out.print("> ");
+
+        choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
+            case 1:
+                newRegistrationPage(scanner, admin);
+                break;
+            case 2:
+                break;
+            case 3:
+                exportDataPage(scanner, admin);
+                break;
+            case 0:
+                System.out.println("Logging out...");
+                break;
+            default:
+                System.out.println("Invalid option. Please try again.");
+                break;
+        }}while(choice != 0);
     }
 
     public static void completeRegPage(Scanner scanner) {
         System.out.println();
-        System.out.println("**************** Complete Registration ****************");
+        System.out.println("********* Complete Registration *********");
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
         Boolean isUser = UserManager.findUser(uuid);
@@ -103,5 +119,12 @@ public class Menus {
         }
 
         System.out.println("***************************************");
+    }
+
+    public static void exportDataPage(Scanner scanner, Admin admin){
+//        System.out.println();
+//        System.out.println("********* Complete Registration *********");
+//        System.out.print("Enter UUID > ");
+        admin.downloadUsers();
     }
 }

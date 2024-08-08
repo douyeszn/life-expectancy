@@ -1,7 +1,7 @@
 #!/bin/bash
 email="$1"
 pwd=$2
-role=$3
+# role=$3
 
 userRow=$(awk -F',' '$4 == "'"$email"'" {print $0}' ./user-store.txt)
 
@@ -17,12 +17,13 @@ hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
 
 storedRole=$(echo "$userRow" | cut -d ',' -f6)
 
-if [ "$role" != "$storedRole" ]; then
-  echo "User does not exist."
-  exit 0
-fi
+# if [ "$role" != "$storedRole" ]; then
+#   echo "User does not exist."
+#   exit 0
+# fi
 
 if [ "$hashPwd" == "$storedPwd" ]; then
+  echo "$userRow"
   exit 0
 else
   echo "Incorrect password"

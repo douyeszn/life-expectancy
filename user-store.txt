@@ -1,3 +1,4 @@
-UUID,firstName,lastName, email, password, role, dateofBirth, countryISO, isHIVPositive, DiagnosisDate, onARTMed, startARTDate
-001,super,admin,a@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,ADMIN
-442e7a2d-8935-4e84-b825-f4d6a458b6ce, , ,b@cmu.edu
+UUID,firstName,lastName, email, password, role, dateofBirth, countryISO, isHIVPositive, DiagnosisDate, onARTMed, startARTDate, daysToLive
+001,super,admin,a@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,ADMIN,null,null,null,null,null,null,null
+003,Jean,Doe,jean@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,PATIENT,null,null,null,null,null,null,null
+hello,
