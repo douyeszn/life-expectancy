@@ -25,7 +25,7 @@ public class App {
                     String userData;
                     Role role;
                     userData = Menus.loginPage(scanner);
-                    System.out.println("--debug"+userData);
+                    // System.out.println("--debug-- "+userData);
                     role = User.getRole(userData);
                     if(role == null) {
                         System.out.println("user not found");
@@ -38,12 +38,14 @@ public class App {
                             );
                         Menus.adminPage(scanner, admin);
                     }else if(role.equals(Role.PATIENT)){
-                        System.out.println("User loged in");
-                        Menus.patientPage(scanner);
-                    }else{
-                        System.out.println("============+++++");
+                        Patient patient = new Patient(
+                            User.getDataField(userData, DataStructure.email.getValue()),
+                            User.getDataField(userData, DataStructure.password.getValue())
+                            );
+                        // System.out.println("User loged in");
+                        Menus.patientPage(scanner, userData, patient);
                     }
-                    break;
+                    return;
                 case 2:
                     if(Menus.completeRegPage(scanner) == true) {
                         Menus.loginPage(scanner);

@@ -67,8 +67,23 @@ public class Menus {
         }}while(choice != 0);
     }
 
-    public static void patientPage(Scanner scanner) {
-        System.out.println("you are a patient");
+    public static void patientPage(Scanner scanner, String data, Patient patient) {
+        int choice;
+        do{
+            System.out.println();
+            patient.displayPatientInfo(data);
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1: 
+                    //updateDataPage();
+                    break;
+                case 0:
+                System.out.println("Logging out...");
+                break;
+
+            }
+        }while (choice != 0);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
@@ -96,7 +111,7 @@ public class Menus {
                 diagnosisDate = scanner.nextLine();
             }
 
-            System.out.print("Is the user on ART Medication? (true/false) > ");
+            System.out.print("Are you on ART Medication? (true/false) > ");
             boolean onARTMedication = Boolean.parseBoolean(scanner.nextLine());
 
             String startARTDate = null;

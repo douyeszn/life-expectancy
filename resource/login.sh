@@ -9,12 +9,12 @@ if [ -z "$userRow" ]; then
   echo "Login failed: UUID not found"
   exit 1
 fi
-
+echo $userRow
 storedPwd=$(echo "$userRow" | cut -d ',' -f5)
 
 salt="gishwati"
 hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
-
+# echo $hashPwd
 # storedRole=$(echo "$userRow" | cut -d ',' -f6)
 
 
