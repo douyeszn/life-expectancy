@@ -31,7 +31,7 @@ public class App {
                             User.getDataField(userData, DataStructure.email.getValue()),
                             User.getDataField(userData, DataStructure.password.getValue())
                             );
-                        admin.addDataField("hello", 2);
+                        // admin.addDataField("hello", 2);
                         Menus.adminPage(scanner, admin);
                     }
                     break;
