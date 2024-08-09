@@ -1,7 +1,7 @@
 #!/bin/bash
 
 input_file="./user-store.txt"
-output_file="patients.txt"
+output_file="patients.csv"
 
 header=$(head -n 1 "$input_file")
 
