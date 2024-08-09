@@ -1,19 +1,13 @@
 import java.util.Scanner;
 
 public class Menus {
-    public static void homePage(Scanner scanner) {
+    public static void homePage() {
         System.out.println();
         System.out.println("********* HIV Life Expectancy *********");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
         System.out.println("***************************************");
         System.out.print("> ");
-        int choice = scanner.nextInt();
-        if(choice == 1){
-            Menus.loginPage(scanner);
-        }else if(choice == 2){
-            Menus.completeRegPage(scanner);
-        }
     }
     
     public static String loginPage(Scanner scanner){
