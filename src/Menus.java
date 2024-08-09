@@ -1,17 +1,22 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Menus {
-    public static void homePage() {
+    public static void homePage(Scanner scanner) {
         System.out.println();
         System.out.println("********* HIV Life Expectancy *********");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
         System.out.println("***************************************");
         System.out.print("> ");
+        int choice = scanner.nextInt();
+        if(choice == 1){
+            Menus.loginPage(scanner);
+        }else if(choice == 2){
+            Menus.completeRegPage(scanner);
+        }
     }
     
-    public static String loginPage(Scanner scanner) throws IOException, InterruptedException {
+    public static String loginPage(Scanner scanner){
         System.out.println();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
@@ -77,14 +82,15 @@ public class Menus {
             switch (choice) {
                 case 1: 
                     //updateDataPage();
+                    System.out.println("Feature under development");
                     break;
                 case 0:
-                System.out.println("Logging out...");
-                break;
+                    System.out.println("Logging out...");
+                    break;
 
                 default:
-                System.out.println("Invalid input");
-                continue;
+                    System.out.println("Invalid input");
+                    continue;
             }
         }while (choice != 0);
     }
