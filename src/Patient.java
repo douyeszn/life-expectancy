@@ -184,7 +184,7 @@ public class Patient extends User{
         System.out.printf(format, "Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
         System.out.printf(format, "On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
-        System.out.printf(format, "Days to live", User.getDataField(data, DataStructure.daysToLive.getValue()));
+        System.out.printf(format, "Days to live", this.calculateLifeSpan());
         System.out.println("**************************************");
         System.out.println("0. Logout 1. Update data");
     }
