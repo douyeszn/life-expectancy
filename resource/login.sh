@@ -12,8 +12,8 @@ fi
 storedPwd=$(echo "$userRow" | cut -d ',' -f5)
 
 salt="gishwati"
-hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
-
+# hashPwd=$(openssl passwd -6 -salt "$salt" "$pwd")
+hashPwd=$pwd
 if [ "$hashPwd" == "$storedPwd" ]; then
   echo "$userRow"
   exit 0

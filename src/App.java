@@ -53,21 +53,19 @@ public class App {
 
                         Menus.patientPage(scanner, userData, patient);
                     }else{
-                        System.out.println("============+++++");
+                        System.out.println("Invalid User");
+                        Menus.loginPage(scanner);
                     }
                     break;
                 case 2:
-                    if(Menus.completeRegPage(scanner) == true) {
-                        Menus.loginPage(scanner);
-                    }else{
+                    if(Menus.completeRegPage(scanner) != true) {
                         System.out.println("Registrations failed, try again");
-                        Menus.completeRegPage(scanner);
                     }
-                    return;
+                    break;
                 default:
                     System.out.println("Invalid option. Please try again.");
                     Menus.loginPage(scanner);
-                    return;
+                    break;
             }
         }
         scanner.close();

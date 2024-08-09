@@ -84,15 +84,16 @@ BEGIN {
         print $0;
     } else {
         if ($1 == uuid && !skip) {
-            if (pos == 5) {
-                # Hash the value of the 5th column
-                cmd = "echo \"" $pos "\" | openssl passwd -6 -stdin";
-                cmd | getline hashed_value;
-                close(cmd);
-                $pos = hashed_value;
-            } else {
-                $pos = new_content;
-            }
+            # if (pos == 5) {
+            #     # Hash the value of the 5th column
+            #     cmd = "echo \"" $pos "\" | openssl passwd -6 -stdin";
+            #     cmd | getline hashed_value;
+            #     close(cmd);
+            #     $pos = hashed_value;
+            # } else {
+            #     $pos = new_content;
+            # }
+            $pos = new_content;
         }
         print $0;
     }
