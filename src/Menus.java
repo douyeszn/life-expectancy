@@ -1,17 +1,22 @@
-import java.io.IOException;
 import java.util.Scanner;
 
 public class Menus {
-    public static void homePage() {
+    public static void homePage(Scanner scanner) {
         System.out.println();
         System.out.println("********* HIV Life Expectancy *********");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
         System.out.println("***************************************");
         System.out.print("> ");
+        int choice = scanner.nextInt();
+        if(choice == 1){
+            Menus.loginPage(scanner);
+        }else if(choice == 2){
+            Menus.completeRegPage(scanner);
+        }
     }
     
-    public static String loginPage(Scanner scanner) throws IOException, InterruptedException {
+    public static String loginPage(Scanner scanner){
         System.out.println();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
@@ -67,8 +72,27 @@ public class Menus {
         }}while(choice != 0);
     }
 
-    public static void patientPage(Scanner scanner) {
-        System.out.println("you are a patient");
+    public static void patientPage(Scanner scanner, String data, Patient patient) {
+        int choice;
+        do{
+            System.out.println();
+            patient.displayPatientInfo(data);
+            choice = scanner.nextInt();
+            scanner.nextLine();
+            switch (choice) {
+                case 1: 
+                    //updateDataPage();
+                    System.out.println("Feature under development");
+                    break;
+                case 0:
+                    System.out.println("Logging out...");
+                    break;
+
+                default:
+                    System.out.println("Invalid input");
+                    continue;
+            }
+        }while (choice != 0);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
@@ -89,20 +113,22 @@ public class Menus {
 
             System.out.print("Are you HIV Positive? (true/false) > ");
             boolean isHIVPositive = Boolean.parseBoolean(scanner.nextLine());
-
+            boolean onARTMedication = false;
             String diagnosisDate = "";
+            String startARTDate = "";
             if (isHIVPositive) {
                 System.out.print("Enter date diagnosed (YYYY-MM-DD) > ");
                 diagnosisDate = scanner.nextLine();
-            }
-
-            System.out.print("Is the user on ART Medication? (true/false) > ");
-            boolean onARTMedication = Boolean.parseBoolean(scanner.nextLine());
-
-            String startARTDate = null;
-            if (onARTMedication) {
-                System.out.print("Enter ART start date (YYYY-MM-DD) > ");
-                startARTDate = scanner.nextLine();
+                System.out.print("Are you on ART Medication? (true/false) > ");
+                onARTMedication = Boolean.parseBoolean(scanner.nextLine());
+                if(onARTMedication){
+                    System.out.print("Enter ART start date (YYYY-MM-DD) > ");
+                    startARTDate = scanner.nextLine();
+                }else{
+                    startARTDate = "nil";
+                }
+            }else{
+                diagnosisDate = "nil";
             }
 
             System.out.print("Enter Country ISO Code (ABC) > ");
@@ -110,7 +136,6 @@ public class Menus {
             
             System.out.print("Enter new password > ");
             String password = scanner.nextLine();
-
 
             boolean regStatus = Patient.completeRegistration(
                 uuid, // UUID remains the same

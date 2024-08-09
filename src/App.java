@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            Menus.homePage();
+            Menus.homePage(scanner);
 
             String input = scanner.nextLine();
             if (input.equals("q")) {
@@ -21,11 +21,10 @@ public class App {
             }
 
             switch (option) {
-                case 1:
+                case 1: // login
                     String userData;
                     Role role;
                     userData = Menus.loginPage(scanner);
-                    System.out.println("--debug"+userData);
                     role = User.getRole(userData);
                     if(role == null) {
                         System.out.println("user not found");
@@ -38,13 +37,14 @@ public class App {
                             );
                         Menus.adminPage(scanner, admin);
                     }else if(role.equals(Role.PATIENT)){
-                        System.out.println("User loged in");
-                        Menus.patientPage(scanner);
-                    }else{
-                        System.out.println("============+++++");
+                        Patient patient = new Patient(
+                            User.getDataField(userData, DataStructure.email.getValue()),
+                            User.getDataField(userData, DataStructure.password.getValue())
+                            );
+                        Menus.patientPage(scanner, userData, patient);
                     }
-                    break;
-                case 2:
+                    return;
+                case 2: // Patient registration
                     if(Menus.completeRegPage(scanner) == true) {
                         Menus.loginPage(scanner);
                     }else{
@@ -56,8 +56,8 @@ public class App {
                     System.out.println("Invalid option. Please try again.");
                     Menus.loginPage(scanner);
                     return;
+                }
             }
+            scanner.close();
         }
-        scanner.close();
-    }
 }
