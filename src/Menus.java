@@ -107,20 +107,22 @@ public class Menus {
 
             System.out.print("Are you HIV Positive? (true/false) > ");
             boolean isHIVPositive = Boolean.parseBoolean(scanner.nextLine());
-
+            boolean onARTMedication = false;
             String diagnosisDate = "";
+            String startARTDate = "";
             if (isHIVPositive) {
                 System.out.print("Enter date diagnosed (YYYY-MM-DD) > ");
                 diagnosisDate = scanner.nextLine();
-            }
-
-            System.out.print("Are you on ART Medication? (true/false) > ");
-            boolean onARTMedication = Boolean.parseBoolean(scanner.nextLine());
-
-            String startARTDate = null;
-            if (onARTMedication) {
-                System.out.print("Enter ART start date (YYYY-MM-DD) > ");
-                startARTDate = scanner.nextLine();
+                System.out.print("Are you on ART Medication? (true/false) > ");
+                onARTMedication = Boolean.parseBoolean(scanner.nextLine());
+                if(onARTMedication){
+                    System.out.print("Enter ART start date (YYYY-MM-DD) > ");
+                    startARTDate = scanner.nextLine();
+                }else{
+                    startARTDate = "nil";
+                }
+            }else{
+                diagnosisDate = "nil";
             }
 
             System.out.print("Enter Country ISO Code (ABC) > ");
@@ -128,7 +130,6 @@ public class Menus {
             
             System.out.print("Enter new password > ");
             String password = scanner.nextLine();
-
 
             boolean regStatus = Patient.completeRegistration(
                 uuid, // UUID remains the same
