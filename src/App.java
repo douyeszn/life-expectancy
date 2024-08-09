@@ -31,12 +31,11 @@ public class App {
                         System.out.println("user not found");
                         Menus.loginPage(scanner);
                     }
-                    if(role.equals(Role.ADMIN)){
+                    else if(role.equals(Role.ADMIN)){
                         Admin admin = new Admin(
                             User.getDataField(userData, DataStructure.email.getValue()),
                             User.getDataField(userData, DataStructure.password.getValue())
                             );
-                        // admin.addDataField("hello", 2);
                         Menus.adminPage(scanner, admin);
                     }else if(role.equals(Role.PATIENT)){
                         Map<String, String> userMap = new UserMap(userData).getUserMap();
@@ -51,7 +50,10 @@ public class App {
                                 Boolean.parseBoolean(userMap.get("onARTMedication")),
                                 userMap.get("startARTDate")
                         );
-                        Menus.patientPage(scanner);
+
+                        Menus.patientPage(scanner, userData, patient);
+                    }else{
+                        System.out.println("============+++++");
                     }
                     break;
                 case 2:
@@ -64,6 +66,7 @@ public class App {
                     return;
                 default:
                     System.out.println("Invalid option. Please try again.");
+                    Menus.loginPage(scanner);
                     return;
             }
         }
