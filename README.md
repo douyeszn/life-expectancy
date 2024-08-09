@@ -36,6 +36,9 @@ To run this project, follow these steps:
 ## Usage
 
 After starting the application, you will be presented with a home page menu where you can choose to login, register, or complete registration.
+Login:
+email `a@cmu.edu`
+password `12345`
 
 ## Classes
 
