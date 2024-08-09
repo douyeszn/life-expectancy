@@ -1,4 +1,2 @@
 UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive,DiagnosisDate,onARTMed,startARTDate,daysToLive
 001,hiro,admin,a@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,ADMIN,null,null,null,null,null,null,null
-002,super,admin,admin@cmu.edu,12345,ADMIN,null,null,null,null,null,null,null
-b2f3a145-d6b4-459c-a6ba-3fd89ba5b211,sick,man,patient@cmu.edu,12345,PATIENT,1999-05-20,DZA,true,2005-08-24,true,2020-05-12,null
