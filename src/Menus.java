@@ -98,7 +98,7 @@ public class Menus {
         if (isUser) {
             System.out.print("Enter Firstname > ");
             String firstName = scanner.nextLine();
-            
+
             System.out.print("Enter Lastname > ");
             String lastName = scanner.nextLine();
 
@@ -127,7 +127,7 @@ public class Menus {
 
             System.out.print("Enter Country ISO Code (ABC) > ");
             String countryISO = scanner.nextLine();
-            
+
             System.out.print("Enter new password > ");
             String password = scanner.nextLine();
 
@@ -161,5 +161,4 @@ public class Menus {
     public static void exportDataPage(Scanner scanner, Admin admin){
         admin.downloadUsers();
     }
-
 }

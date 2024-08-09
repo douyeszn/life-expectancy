@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.Map;
 import java.util.Scanner;
 
 public class App {
@@ -21,7 +22,7 @@ public class App {
             }
 
             switch (option) {
-                case 1: // login
+                case 1:
                     String userData;
                     Role role;
                     userData = Menus.loginPage(scanner);
@@ -37,14 +38,25 @@ public class App {
                             );
                         Menus.adminPage(scanner, admin);
                     }else if(role.equals(Role.PATIENT)){
+                        Map<String, String> userMap = new UserMap(userData).getUserMap();
+
                         Patient patient = new Patient(
-                            User.getDataField(userData, DataStructure.email.getValue()),
-                            User.getDataField(userData, DataStructure.password.getValue())
-                            );
+                                userMap.get("email"),
+                                userMap.get("password"),
+                                userMap.get("dateOfBirth"),
+                                userMap.get("countryISO"),
+                                Boolean.parseBoolean(userMap.get("isHIVPositive")),
+                                userMap.get("DiagnosisDate"),
+                                Boolean.parseBoolean(userMap.get("onARTMedication")),
+                                userMap.get("startARTDate")
+                        );
+
                         Menus.patientPage(scanner, userData, patient);
+                    }else{
+                        System.out.println("============+++++");
                     }
-                    return;
-                case 2: // Patient registration
+                    break;
+                case 2:
                     if(Menus.completeRegPage(scanner) == true) {
                         Menus.loginPage(scanner);
                     }else{
@@ -56,8 +68,8 @@ public class App {
                     System.out.println("Invalid option. Please try again.");
                     Menus.loginPage(scanner);
                     return;
-                }
             }
-            scanner.close();
         }
+        scanner.close();
+    }
 }

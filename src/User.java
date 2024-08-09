@@ -71,7 +71,6 @@ public abstract class User {
         } else if (roleString.equals(Role.PATIENT.toString())) {
             return Role.PATIENT;
         }else{
-            System.out.println("++getRole: Role not found");
             return null;
         }
     }
