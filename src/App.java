@@ -5,7 +5,7 @@ public class App {
     public static void main(String[] args) throws IOException, InterruptedException {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            Menus.homePage(scanner);
+            Menus.homePage();
 
             String input = scanner.nextLine();
             if (input.equals("q")) {
