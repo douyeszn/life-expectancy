@@ -63,7 +63,7 @@ SKIP_COLUMNS="1 4 6 13"
 TEMP_FILE=$(mktemp)
 
 # Use awk to process the file and hash the 5th column if needed
-awk -v uuid="$UUID" -v new_content="$NEW_CONTENT" -v position="$POSITION" -v skip_columns="$SKIP_COLUMNS" -F, -v OFS=',' '
+awk -v uuid="$UUID" -v new_content="$NEW_CONTENT" -v position="$POSITION" -v skip_columns="$SKIP_COLUMNS" -v salt="gishwati" -F, -v OFS=',' '
 BEGIN {
     split(skip_columns, skips, " ");
     pos = position;
@@ -84,16 +84,16 @@ BEGIN {
         print $0;
     } else {
         if ($1 == uuid && !skip) {
-            # if (pos == 5) {
-            #     # Hash the value of the 5th column
-            #     cmd = "echo \"" $pos "\" | openssl passwd -6 -stdin";
-            #     cmd | getline hashed_value;
-            #     close(cmd);
-            #     $pos = hashed_value;
-            # } else {
-            #     $pos = new_content;
-            # }
-            $pos = new_content;
+             if (pos == 5) {
+             # Hash the value of the specified column
+             cmd = "openssl passwd -6 -salt \"" salt "\" \"" new_content "\""
+             cmd | getline hashed_value;
+             close(cmd);
+             $pos = hashed_value;
+             }  else {
+                 $pos = new_content;
+             }
+#            $pos = new_content;
         }
         print $0;
     }
