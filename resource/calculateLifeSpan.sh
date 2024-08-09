@@ -27,4 +27,4 @@ damping=$(echo "scale=3; $percentLifeDecrease ^ $yearsDelayedBeforeART" | bc)
 
 lifespan=$(echo "scale=1; $lifeSpan * $damping" | bc)
 
-echo  "$lifespan"
+echo "$lifespan"
