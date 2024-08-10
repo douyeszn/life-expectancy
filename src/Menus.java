@@ -6,6 +6,7 @@ public class Menus {
         System.out.println("********* HIV Life Expectancy *********");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
+        System.out.println("0. Quit");
         System.out.println("***************************************");
         System.out.print("> ");
     }
