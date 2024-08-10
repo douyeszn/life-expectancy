@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Patient extends User{
     private String dateOfBirth;
@@ -35,11 +36,32 @@ public class Patient extends User{
     }
 
     public int calculateYearsBetweenDates(String startDateStr, String endDateStr, String dateFormat) {
+        // Validate that both date strings are provided
+        if (startDateStr == null || endDateStr == null || dateFormat == null) {
+            System.out.println("Error: One or more input values are null.");
+            return 0;
+        }
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+        LocalDate startDate;
+        LocalDate endDate;
 
-        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
-        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+        try {
+            // Parse the date strings into LocalDate objects
+            startDate = LocalDate.parse(startDateStr, formatter);
+            endDate = LocalDate.parse(endDateStr, formatter);
+        } catch (DateTimeParseException e) {
+            // System.out.println("Error: Invalid date format or date value.");
+            return 0;
+        }
 
+        // Ensure that the end date is after the start date
+        if (startDate.isAfter(endDate)) {
+            // System.out.println("Error: The end date must be after the start date.");
+            return 0;
+        }
+
+        // Calculate the period between the two dates and return the number of years
         Period period = Period.between(startDate, endDate);
         return period.getYears();
     }
@@ -58,10 +80,7 @@ public class Patient extends User{
 
         String[] cmd = {
                 "bash",
-                "resource/calculateLifeSpan.sh",
-                String.valueOf(isHIVPositive),
-                String.valueOf(age),
-                String.valueOf(yearsDelayedBeforeART),
+                "resource/getLifeExpectancy.sh",
                 countryISO,
         };
         ProcessBuilder pb = new ProcessBuilder(cmd);

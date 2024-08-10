@@ -120,10 +120,10 @@ public class Menus {
                     System.out.print("Enter ART start date (YYYY-MM-DD) > ");
                     startARTDate = scanner.nextLine();
                 }else{
-                    startARTDate = "nil";
+                    startARTDate = "0000-00-00";
                 }
             }else{
-                diagnosisDate = "nil";
+                diagnosisDate = "0000-00-00";
             }
 
             System.out.print("Enter Country ISO Code (ABC) > ");
