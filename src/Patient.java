@@ -47,7 +47,6 @@ public class Patient extends User{
         LocalDate endDate;
 
         try {
-            // Parse the date strings into LocalDate objects
             startDate = LocalDate.parse(startDateStr, formatter);
             endDate = LocalDate.parse(endDateStr, formatter);
         } catch (DateTimeParseException e) {
@@ -55,33 +54,21 @@ public class Patient extends User{
             return 0;
         }
 
-        // Ensure that the end date is after the start date
         if (startDate.isAfter(endDate)) {
             // System.out.println("Error: The end date must be after the start date.");
             return 0;
         }
 
-        // Calculate the period between the two dates and return the number of years
         Period period = Period.between(startDate, endDate);
         return period.getYears();
     }
 
-    public int calculateLifeSpan(){
-        String countryISO = this.getCountryISOcode();
-        boolean isHIVPositive = this.isHIVPositive();
-        String diagnosisDate = this.getHivDiagnosisDate();
-        String startARTDate = this.getStartARTDate();
-
-        String dateOfBirth = this.getDateOfBirth();
-        LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        int age = Period.between(dob, LocalDate.now()).getYears();
-
-        int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
-
+    public double getLifeExpectancy(String iso){
+        double lifespanDouble = 0.0;
         String[] cmd = {
-                "bash",
-                "resource/getLifeExpectancy.sh",
-                countryISO,
+            "bash",
+            "resource/getLifeExpectancy.sh",
+            iso,
         };
         ProcessBuilder pb = new ProcessBuilder(cmd);
         try {
@@ -105,11 +92,49 @@ public class Patient extends User{
             }
 
             String lifespan = outputBuilder.toString().trim();
-            double lifespanDouble = Double.parseDouble(lifespan);
-            return (int) Math.round(lifespanDouble);
+            lifespanDouble = Double.parseDouble(lifespan);
         }catch(Exception e){
             System.err.println(e.getMessage());
         }
+        return lifespanDouble;
+    }
+
+    public int calculateLifeSpan() {
+        String countryISO = this.getCountryISOcode();
+        double lifeExpectancy = getLifeExpectancy(countryISO);
+        boolean isHIVPositive = this.isHIVPositive();
+        boolean onARTMed = this.onARTMed();
+        String diagnosisDate = this.getHivDiagnosisDate();
+        String startARTDate = this.getStartARTDate();
+
+        String dateOfBirth = this.getDateOfBirth();
+        LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        int age = Period.between(dob, LocalDate.now()).getYears();
+
+        int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
+
+        if (!isHIVPositive) {
+            return (int) lifeExpectancy - age;
+        }
+
+        if (isHIVPositive && onARTMed) {
+            // Calculate the remaining lifespan if the person is on ART drugs
+            LocalDate diagnosisLocalDate = LocalDate.parse(diagnosisDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            LocalDate artStartDate = LocalDate.parse(startARTDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            int yearsBetweenDiagnosisAndART = Period.between(diagnosisLocalDate, artStartDate).getYears();
+            
+            double remainingLifespan = (lifeExpectancy - age - yearsDelayedBeforeART) * 0.90;
+            
+            for (int i = 0; i < yearsDelayedBeforeART; i++) {
+                remainingLifespan *= 0.90; // Reduce by 10% for each year of delay
+            }
+
+            return (int) remainingLifespan;
+        } else if (isHIVPositive && !onARTMed) {
+            return 5 - yearsDelayedBeforeART; // 5 years survival time after diagnosis
+        }
+
+        // Default return value (should not reach here)
         return 0;
     }
 
@@ -120,7 +145,10 @@ public class Patient extends User{
     public boolean isHIVPositive() {
         return isHIVPositive;
     }
-
+    
+    public boolean onARTMed() {
+        return onARTMedication;
+    }
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -203,9 +231,9 @@ public class Patient extends User{
         System.out.printf(format, "Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
         System.out.printf(format, "On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
-        System.out.printf(format, "Days to live", this.calculateLifeSpan());
+        System.out.printf(format, "Years to live", this.calculateLifeSpan());
         System.out.println("**************************************");
+        User.updateDataField("user-store.txt", User.getDataField(data, DataStructure.UUID.getValue()), data, DataStructure.daysToLive.getValue());
         System.out.println("0. Logout 1. Update data");
     }
-
 }
