@@ -20,17 +20,14 @@ public class Menus {
         Credentials.password = scanner.nextLine();
         System.out.println("***************************************");
         String data = User.login(Credentials.email, Credentials.password);
-        // Role role = User.getRole(data);
         return data;
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {
-        // Admin admin = new Admin(null, null);
         System.out.println();
         System.out.println("********** Register New User **********");
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
-        // admin.initiateReg(Credentials.email);
         admin.newPatientReg(Credentials.email);
         System.out.println("***************************************");
     }
@@ -95,6 +92,11 @@ public class Menus {
         System.out.println("********* Complete Registration *********");
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
+        int option = -1;
+        boolean isHIVPositive = false;
+        boolean onARTMedication = false;
+        String diagnosisDate = "";
+        String startARTDate = "";
         Boolean isUser = User.findUser(uuid);
         if (isUser) {
             System.out.print("Enter Firstname > ");
@@ -106,24 +108,57 @@ public class Menus {
             System.out.print("Enter Date of Birth (YYYY-MM-DD) > ");
             String dateOfBirth = scanner.nextLine();
 
-            System.out.print("Are you HIV Positive? (true/false) > ");
-            boolean isHIVPositive = Boolean.parseBoolean(scanner.nextLine());
-            boolean onARTMedication = false;
-            String diagnosisDate = "";
-            String startARTDate = "";
+            // Check for HIV
+            do {
+                System.out.print("Are you HIV Positive? Press (1. Yes - 0. No) > ");
+                String isHIV = scanner.nextLine();
+                try {
+                    option = Integer.parseInt(isHIV);
+                    if (option != 1 && option != 0) {
+                        System.out.println("Invalid input. Please enter 1 for Yes and 0 for No.");
+                    } else if (option == 1) {
+                        isHIVPositive = true;
+                    } else {
+                        isHIVPositive = false;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number. (0 or 1)");
+                    option = -1; // Set to an invalid number to continue the loop
+                }
+            } while (option != 1 && option != 0);
+
+            // Check for ART
             if (isHIVPositive) {
                 System.out.print("Enter date diagnosed (YYYY-MM-DD) > ");
                 diagnosisDate = scanner.nextLine();
-                System.out.print("Are you on ART Medication? (true/false) > ");
-                onARTMedication = Boolean.parseBoolean(scanner.nextLine());
-                if(onARTMedication){
-                    System.out.print("Enter ART start date (YYYY-MM-DD) > ");
-                    startARTDate = scanner.nextLine();
-                }else{
-                    startARTDate = "0000-00-00";
-                }
+                do{
+                    System.out.print("Are you on ART Medication? Press (1. Yes - 0. No) > ");
+                    String onART = scanner.nextLine();
+                    try {
+                        option = Integer.parseInt(onART);
+                        if (option != 1 && option != 0) {
+                            System.out.println("Invalid input. Please enter 1 for Yes and 0 for No.");
+                        } else if (option == 1) {
+                            onARTMedication = true;
+                        } else {
+                            onARTMedication = false;
+                        }
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid input. Please enter a number. (0 or 1)");
+                        option = -1;
+                    }
+    
+                    if (onARTMedication) {
+                        System.out.print("Enter ART start date (YYYY-MM-DD) > ");
+                        startARTDate = scanner.nextLine();
+                    } else {
+                        startARTDate = "";
+                    }
+
+                } while (option != 1 && option != 0);
+
             }else{
-                diagnosisDate = "0000-00-00";
+                diagnosisDate = "";
             }
 
             System.out.print("Enter Country ISO Code (ABC) > ");
