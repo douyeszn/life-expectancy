@@ -36,12 +36,12 @@ public class Menus {
         int choice;
         do{
         System.out.println();
-        System.out.println("************** Admin Menu **************");
+        System.out.println("************* Admin Menu **************");
         System.out.println("1. Register New user");
         System.out.println("2. Register New Admin");
         System.out.println("3. Export data");
         System.out.println("0. Logout");
-        System.out.println("****************************************");
+        System.out.println("***************************************");
         System.out.print("> ");
 
         choice = scanner.nextInt();

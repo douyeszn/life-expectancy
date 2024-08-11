@@ -3,3 +3,5 @@ UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive
 bb7ebba3-df43-4b5a-8c75-93f07fb9efda,attah,hiro,b@cmu.edu,$6$gishwati$h4G/LNuCR54iJKpWgnZg2aV.SRBVNPBgoA2LO52VhLgxob3VuC9Tkemmtxc2uIAHMCQP7jjyp1pAFpByFtpza/,PATIENT,2002-05-12,DZA,false,null,false,,null
 790fb3e6-82ab-4e2c-8e21-5f5c213b9e22,Elizabeth,Franklin,lizy@cmu.edu,$6$gishwati$ntOmFOafid8Sp8cKKGV6pPFh/Ir3krjBQZV4us23Y9WGwtZFSkYhcuHMx.n8.2OTgqh27JTM80pGNDJtrNrza1,PATIENT,1991-02-20,USA,true,2001-05-12,true,2012-06-08,null
 54d7c413-e0f4-43fd-b6b3-777566a6374c,sick,man,sick@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,2001-05-02,USA,true,2006-05-04,true,2008-06-04,null
+
+2297475c-9c2e-48c3-85ab-2c97562cebba,victor,Man,victor@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,1996-02-12,NGA,false,,false,,null

@@ -12,10 +12,11 @@ public class Patient extends User{
     private String hivDiagnosisDate;
     private boolean onARTMedication;
     private String startARTDate;
+    private int daysToLive;
 
-    public Patient(String email, String password) {
-        super(null,null, email, password);
-    }
+    // public Patient(String email, String password) {
+    //     super(null,null, email, password);
+    // }
 
     public Patient(
             String email,
@@ -33,6 +34,7 @@ public class Patient extends User{
         this.hivDiagnosisDate = hivDiagnosisDate;
         this.onARTMedication = onARTMedication;
         this.startARTDate = startARTDate;
+        this.daysToLive = calculateLifeSpan();
     }
 
     public int calculateYearsBetweenDates(String startDateStr, String endDateStr, String dateFormat) {
@@ -112,21 +114,18 @@ public class Patient extends User{
         int age = Period.between(dob, LocalDate.now()).getYears();
 
         int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
-
+        // healty person
         if (!isHIVPositive) {
             return (int) lifeExpectancy - age;
         }
 
+        // Calculate the remaining lifespan if the person is on ART drugs
         if (isHIVPositive && onARTMed) {
-            // Calculate the remaining lifespan if the person is on ART drugs
-            LocalDate diagnosisLocalDate = LocalDate.parse(diagnosisDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            LocalDate artStartDate = LocalDate.parse(startARTDate, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-            int yearsBetweenDiagnosisAndART = Period.between(diagnosisLocalDate, artStartDate).getYears();
-            
             double remainingLifespan = (lifeExpectancy - age - yearsDelayedBeforeART) * 0.90;
             
+            // Reduce by 10% for each year of delay
             for (int i = 0; i < yearsDelayedBeforeART; i++) {
-                remainingLifespan *= 0.90; // Reduce by 10% for each year of delay
+                remainingLifespan *= 0.90;
             }
 
             return (int) remainingLifespan;
@@ -134,7 +133,6 @@ public class Patient extends User{
             return 5 - yearsDelayedBeforeART; // 5 years survival time after diagnosis
         }
 
-        // Default return value (should not reach here)
         return 0;
     }
 
@@ -178,7 +176,7 @@ public class Patient extends User{
             String startARTDate) {
 
         try {
-            // Define the data to be updated
+            // Define the data to be updated - null fields are ignored by bash
             String[] dataFields = {
                     uuid, // UUID remains the same
                     firstName,
@@ -234,6 +232,6 @@ public class Patient extends User{
         System.out.printf(format, "Years to live", this.calculateLifeSpan());
         System.out.println("**************************************");
         User.updateDataField("user-store.txt", User.getDataField(data, DataStructure.UUID.getValue()), data, DataStructure.daysToLive.getValue());
-        System.out.println("0. Logout 1. Update data");
+        System.out.println("0. Logout\t1. Update data \n>");
     }
 }
