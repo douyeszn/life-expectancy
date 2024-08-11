@@ -3,6 +3,7 @@ import java.io.InputStreamReader;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class Patient extends User{
     private String dateOfBirth;
@@ -11,10 +12,11 @@ public class Patient extends User{
     private String hivDiagnosisDate;
     private boolean onARTMedication;
     private String startARTDate;
+    private int daysToLive;
 
-    public Patient(String email, String password) {
-        super(null,null, email, password);
-    }
+    // public Patient(String email, String password) {
+    //     super(null,null, email, password);
+    // }
 
     public Patient(
             String email,
@@ -32,37 +34,43 @@ public class Patient extends User{
         this.hivDiagnosisDate = hivDiagnosisDate;
         this.onARTMedication = onARTMedication;
         this.startARTDate = startARTDate;
+        this.daysToLive = calculateLifeSpan();
     }
 
     public int calculateYearsBetweenDates(String startDateStr, String endDateStr, String dateFormat) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+        // Validate that both date strings are provided
+        if (startDateStr == null || endDateStr == null || dateFormat == null) {
+            System.out.println("Error: One or more input values are null.");
+            return 0;
+        }
 
-        LocalDate startDate = LocalDate.parse(startDateStr, formatter);
-        LocalDate endDate = LocalDate.parse(endDateStr, formatter);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(dateFormat);
+        LocalDate startDate;
+        LocalDate endDate;
+
+        try {
+            startDate = LocalDate.parse(startDateStr, formatter);
+            endDate = LocalDate.parse(endDateStr, formatter);
+        } catch (DateTimeParseException e) {
+            // System.out.println("Error: Invalid date format or date value.");
+            return 0;
+        }
+
+        if (startDate.isAfter(endDate)) {
+            // System.out.println("Error: The end date must be after the start date.");
+            return 0;
+        }
 
         Period period = Period.between(startDate, endDate);
         return period.getYears();
     }
 
-    public int calculateLifeSpan(){
-        String countryISO = this.getCountryISOcode();
-        boolean isHIVPositive = this.isHIVPositive();
-        String diagnosisDate = this.getHivDiagnosisDate();
-        String startARTDate = this.getStartARTDate();
-
-        String dateOfBirth = this.getDateOfBirth();
-        LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        int age = Period.between(dob, LocalDate.now()).getYears();
-
-        int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
-
+    public double getLifeExpectancy(String iso){
+        double lifespanDouble = 0.0;
         String[] cmd = {
-                "bash",
-                "resource/calculateLifeSpan.sh",
-                String.valueOf(isHIVPositive),
-                String.valueOf(age),
-                String.valueOf(yearsDelayedBeforeART),
-                countryISO,
+            "bash",
+            "resource/getLifeExpectancy.sh",
+            iso,
         };
         ProcessBuilder pb = new ProcessBuilder(cmd);
         try {
@@ -86,11 +94,45 @@ public class Patient extends User{
             }
 
             String lifespan = outputBuilder.toString().trim();
-            double lifespanDouble = Double.parseDouble(lifespan);
-            return (int) Math.round(lifespanDouble);
+            lifespanDouble = Double.parseDouble(lifespan);
         }catch(Exception e){
             System.err.println(e.getMessage());
         }
+        return lifespanDouble;
+    }
+
+    public int calculateLifeSpan() {
+        String countryISO = this.getCountryISOcode();
+        double lifeExpectancy = getLifeExpectancy(countryISO);
+        boolean isHIVPositive = this.isHIVPositive();
+        boolean onARTMed = this.onARTMed();
+        String diagnosisDate = this.getHivDiagnosisDate();
+        String startARTDate = this.getStartARTDate();
+
+        String dateOfBirth = this.getDateOfBirth();
+        LocalDate dob = LocalDate.parse(dateOfBirth, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        int age = Period.between(dob, LocalDate.now()).getYears();
+
+        int yearsDelayedBeforeART = calculateYearsBetweenDates(diagnosisDate, startARTDate, "yyyy-MM-dd");
+        // healty person
+        if (!isHIVPositive) {
+            return (int) lifeExpectancy - age;
+        }
+
+        // Calculate the remaining lifespan if the person is on ART drugs
+        if (isHIVPositive && onARTMed) {
+            double remainingLifespan = (lifeExpectancy - age - yearsDelayedBeforeART) * 0.90;
+            
+            // Reduce by 10% for each year of delay
+            for (int i = 0; i < yearsDelayedBeforeART; i++) {
+                remainingLifespan *= 0.90;
+            }
+
+            return (int) remainingLifespan;
+        } else if (isHIVPositive && !onARTMed) {
+            return 5 - yearsDelayedBeforeART; // 5 years survival time after diagnosis
+        }
+
         return 0;
     }
 
@@ -101,7 +143,10 @@ public class Patient extends User{
     public boolean isHIVPositive() {
         return isHIVPositive;
     }
-
+    
+    public boolean onARTMed() {
+        return onARTMedication;
+    }
     public String getDateOfBirth() {
         return dateOfBirth;
     }
@@ -131,7 +176,7 @@ public class Patient extends User{
             String startARTDate) {
 
         try {
-            // Define the data to be updated
+            // Define the data to be updated - null fields are ignored by bash
             String[] dataFields = {
                     uuid, // UUID remains the same
                     firstName,
@@ -184,9 +229,9 @@ public class Patient extends User{
         System.out.printf(format, "Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
         System.out.printf(format, "On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
-        System.out.printf(format, "Days to live", this.calculateLifeSpan());
+        System.out.printf(format, "Years to live", this.calculateLifeSpan());
         System.out.println("**************************************");
-        System.out.println("0. Logout 1. Update data");
+        User.updateDataField("user-store.txt", User.getDataField(data, DataStructure.UUID.getValue()), data, DataStructure.daysToLive.getValue());
+        System.out.println("0. Logout\t1. Update data \n>");
     }
-
 }
