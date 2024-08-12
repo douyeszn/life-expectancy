@@ -73,7 +73,7 @@ public class Menus {
             scanner.nextLine();
             switch (choice) {
                 case 1: 
-                    //updateDataPage();
+                    patientEditPage(scanner, data, patient);
                     System.out.println("Feature under development");
                     break;
                 case 0:
@@ -85,6 +85,27 @@ public class Menus {
                     continue;
             }
         }while (choice != 0);
+    }
+    
+    public static void patientEditPage(Scanner scanner, String data, Patient patient){
+        int choice;
+        do{
+            
+            String format = "%-20s: %-30s%n";
+            System.out.println("*************** Edit data ***************");
+            System.out.printf(format, "1. Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
+            System.out.printf(format, "2. Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
+            System.out.printf(format, "3. Country", User.getDataField(data, DataStructure.countryISO.getValue()));
+            System.out.printf(format, "4. HIV Positive", User.getDataField(data, DataStructure.isHIVPositive.getValue()).equals("true") ? "Yes" : "No");
+            System.out.printf(format, "5. Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
+            System.out.printf(format, "6. On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
+            System.out.printf(format, "7. Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
+            System.out.println("*****************************************");
+            
+            System.out.println();
+            choice = scanner.nextInt();
+            scanner.nextLine();
+        } while (choice != 0);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
