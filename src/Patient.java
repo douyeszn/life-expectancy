@@ -224,7 +224,7 @@ public class Patient extends User{
         Utils.clearScreen();
         String format = "%-20s: %-30s%n";
         // Assuming User is the class that contains the static method getDataField
-        System.out.println("******************************* Patient Details *******************************");
+        System.out.println("*************************** Patient Details ***************************");
         System.out.printf(format, "UUID", User.getDataField(data, DataStructure.UUID.getValue()));
         System.out.printf(format, "Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
         System.out.printf(format, "Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
@@ -234,7 +234,7 @@ public class Patient extends User{
         System.out.printf(format, "On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
         System.out.printf(format, "Years to live", this.calculateLifeSpan() > 0 ? this.calculateLifeSpan() : "its a Miracle you're alive");
-        System.out.println("*******************************************************************************");
+        System.out.println("***********************************************************************");
         User.updateDataField("user-store.txt", User.getDataField(data, DataStructure.UUID.getValue()), Integer.toString(this.calculateLifeSpan()), DataStructure.daysToLive.getValue());
         System.out.print("0. Logout\t1. Update data \n>");
     }
