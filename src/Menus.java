@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Menus {
     public static void homePage() {
-        System.out.println();
+        Utils.clearScreen();
         System.out.println("********* HIV Life Expectancy *********");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
@@ -12,7 +12,7 @@ public class Menus {
     }
     
     public static String loginPage(Scanner scanner){
-        System.out.println();
+        Utils.clearScreen();
         System.out.println("**************** Login ****************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
@@ -24,7 +24,7 @@ public class Menus {
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {
-        System.out.println();
+        Utils.clearScreen();
         System.out.println("********** Register New User **********");
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
@@ -33,66 +33,72 @@ public class Menus {
     }
 
     public static void adminPage(Scanner scanner, Admin admin){
+        String input;
         int choice;
         do{
-        System.out.println();
-        System.out.println("************* Admin Menu **************");
-        System.out.println("1. Register New user");
-        System.out.println("2. Register New Admin");
-        System.out.println("3. Export data");
-        System.out.println("0. Logout");
-        System.out.println("***************************************");
-        System.out.print("> ");
-
-        choice = scanner.nextInt();
-        scanner.nextLine();
-        switch (choice) {
-            case 1:
-                newRegistrationPage(scanner, admin);
-                break;
-            case 2:
-                break;
-            case 3:
-                exportDataPage(scanner, admin);
-                break;
-            case 0:
-                System.out.println("Logging out...");
-                break;
-            default:
-                System.out.println("Invalid option. Please try again.");
-                break;
-        }}while(choice != 0);
-    }
-
-    public static void patientPage(Scanner scanner, String data, Patient patient) {
-        int choice;
-        do{
-            System.out.println();
-            patient.displayPatientInfo(data);
-            choice = scanner.nextInt();
-            scanner.nextLine();
+            Utils.clearScreen();
+            System.out.println("************* Admin Menu **************");
+            System.out.println("1. Register New user");
+            System.out.println("2. Register New Admin");
+            System.out.println("3. Export data");
+            System.out.println("0. Logout");
+            System.out.println("***************************************");
+            System.out.print("> ");
+            input = scanner.nextLine();
+            choice = InputValidator.parseInteger(input);
             switch (choice) {
-                case 1: 
-                    patientEditPage(scanner, data, patient);
-                    System.out.println("Feature under development");
+                case 1:
+                    newRegistrationPage(scanner, admin);
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    exportDataPage(scanner, admin);
                     break;
                 case 0:
                     System.out.println("Logging out...");
+                    Utils.pause(1);
                     break;
-
                 default:
-                    System.out.println("Invalid input");
+                    System.out.println("Enter a valid option");
+                    Utils.pause(1);
+                    continue;
+                }
+            }while(choice != 0);
+        }
+        
+        public static void patientPage(Scanner scanner, String data, Patient patient) {
+            int choice;
+            String input;
+            do{
+                Utils.clearScreen();
+                patient.displayPatientInfo(data);
+                input = scanner.nextLine();
+                choice = InputValidator.parseInteger(input);
+                switch (choice) {
+                    case 1: 
+                    patientEditPage(scanner, data, patient);
+                    break;
+                    case 0:
+                    System.out.println("Logging out...");
+                    Utils.pause(1);
+                    break;
+                    default:
+                    System.out.println("Enter a valid option");
+                    Utils.pause(1);
                     continue;
             }
         }while (choice != 0);
     }
     
     public static void patientEditPage(Scanner scanner, String data, Patient patient){
+        String input;
         int choice;
         do{
             
+            Utils.clearScreen();
             String format = "%-20s: %-30s%n";
-            System.out.println("*************** Edit data ***************");
+            System.out.println("********************************** Edit data **********************************");
             System.out.printf(format, "1. Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
             System.out.printf(format, "2. Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
             System.out.printf(format, "3. Country", User.getDataField(data, DataStructure.countryISO.getValue()));
@@ -100,24 +106,29 @@ public class Menus {
             System.out.printf(format, "5. Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
             System.out.printf(format, "6. On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
             System.out.printf(format, "7. Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
-            System.out.println("*****************************************");
+            System.out.println("*******************************************************************************");
+            System.out.println("0. Back");
+            System.out.print("> ");
+            input = scanner.nextLine();
+            choice = InputValidator.parseInteger(input);
             
-            System.out.println();
-            choice = scanner.nextInt();
-            scanner.nextLine();
         } while (choice != 0);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
-        System.out.println();
-        System.out.println("********* Complete Registration *********");
+        Utils.clearScreen();
+        int option = -1;
+        System.out.println("********************************** Complete Registration **********************************");
+
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
-        int option = -1;
+
         boolean isHIVPositive = false;
         boolean onARTMedication = false;
+
         String diagnosisDate = "";
         String startARTDate = "";
+
         Boolean isUser = User.findUser(uuid);
         if (isUser) {
             System.out.print("Enter Firstname > ");
@@ -211,11 +222,13 @@ public class Menus {
             System.out.println("User does not exist.");
             return false;
         }
-        System.out.println("***************************************");
+        System.out.println("(\"*******************************************************************************");
         return true;
     }
 
     public static void exportDataPage(Scanner scanner, Admin admin){
+        Utils.clearScreen();
         admin.downloadUsers();
+        Utils.pause(1);
     }
 }

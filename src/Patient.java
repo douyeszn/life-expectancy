@@ -41,6 +41,7 @@ public class Patient extends User{
         // Validate that both date strings are provided
         if (startDateStr == null || endDateStr == null || dateFormat == null) {
             System.out.println("Error: One or more input values are null.");
+            Utils.pause(1);
             return 0;
         }
 
@@ -89,6 +90,7 @@ public class Patient extends User{
             if (exitCode != 0) {
                 while ((line = stdError.readLine()) != null) {
                     System.err.println(line);
+                    Utils.pause(1);
                 }
                 throw new RuntimeException("Script execution failed with exit code " + exitCode);
             }
@@ -205,6 +207,7 @@ public class Patient extends User{
                 boolean success = User.updateDataField("user-store.txt", uuid, data, position);
                 if (!success) {
                     System.err.println("Failed to update field at position " + position);
+                    Utils.pause(1);
                     return false;
                 }
             }
@@ -212,15 +215,16 @@ public class Patient extends User{
             return true;
         } catch (Exception e) {
             System.err.println("An error occurred during registration: " + e.getMessage());
+            Utils.pause(1);
             return false;
         }
     }
 
     public void displayPatientInfo(String data) {
+        Utils.clearScreen();
         String format = "%-20s: %-30s%n";
-
         // Assuming User is the class that contains the static method getDataField
-        System.out.println("********** Patient Details **********");
+        System.out.println("******************************* Patient Details *******************************");
         System.out.printf(format, "UUID", User.getDataField(data, DataStructure.UUID.getValue()));
         System.out.printf(format, "Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
         System.out.printf(format, "Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
@@ -230,8 +234,8 @@ public class Patient extends User{
         System.out.printf(format, "On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
         System.out.printf(format, "Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
         System.out.printf(format, "Years to live", this.calculateLifeSpan());
-        System.out.println("**************************************");
+        System.out.println("*******************************************************************************");
         User.updateDataField("user-store.txt", User.getDataField(data, DataStructure.UUID.getValue()), data, DataStructure.daysToLive.getValue());
-        System.out.println("0. Logout\t1. Update data \n>");
+        System.out.print("0. Logout\t1. Update data \n>");
     }
 }

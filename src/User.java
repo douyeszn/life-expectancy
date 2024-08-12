@@ -35,6 +35,7 @@ public abstract class User {
             }
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
+            Utils.pause(1);
         }
         return userData;
     }
@@ -49,12 +50,14 @@ public abstract class User {
 
             if (exitCode == 1) {
                 System.out.println("Failed to get user role");
+                Utils.pause(1);
             }else{
                 BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
                 userData = reader.readLine();
             }
         }catch(Exception e){
             System.err.println(e.getMessage());
+            Utils.pause(1);
         }
         return userData;
     }
@@ -103,6 +106,7 @@ public abstract class User {
             return exitCode == 0;
         } catch (IOException | InterruptedException e) {
             System.err.println("Error executing script: " + e.getMessage());
+            Utils.pause(1);
             return false;
         }
     }
@@ -126,6 +130,7 @@ public abstract class User {
             return false;
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
+            Utils.pause(1);
         }
         return false;
     }
