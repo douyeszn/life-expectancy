@@ -95,7 +95,6 @@ public class Menus {
         String input;
         int choice;
         do{
-            
             Utils.clearScreen();
             String format = "%-20s: %-30s%n";
             System.out.println("********************************** Edit data **********************************");
