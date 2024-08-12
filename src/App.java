@@ -22,13 +22,16 @@ public class App {
                         break;
                     case 0:
                         System.out.println("Exiting...");
+                        Utils.pause(1);
                         break;
                     default:
                         System.out.println("Invalid option. Please try again.");
+                        Utils.pause(1);
                         break;
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a number.");
+                Utils.pause(1);
             }
         }
     
@@ -41,6 +44,7 @@ public class App {
     
         if (role == null) {
             System.out.println("User not found");
+            Utils.pause(1);
         } else if (role.equals(Role.ADMIN)) {
             Admin admin = new Admin(
                 User.getDataField(userData, DataStructure.email.getValue()),
@@ -68,6 +72,7 @@ public class App {
     private static void handleRegistration(Scanner scanner) {
         if (!Menus.completeRegPage(scanner)) {
             System.out.println("Registration failed, try again.");
+            Utils.pause(1);
         }
     }
 }

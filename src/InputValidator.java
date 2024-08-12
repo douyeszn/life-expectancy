@@ -1,16 +1,13 @@
-import java.util.Scanner;
 public class InputValidator {
-    public static int validateInteger(Scanner scanner){
-        int input;
-        do{
-            try{
-                input = scanner.nextInt();
-                scanner.nextLine();
-                return input;
-            }catch(Exception e){
-                System.out.println("Invalid input. Please enter a valid integer.");
-                scanner.nextLine();
-            }
-        }while(true);
+    public static int parseInteger(String input) {
+        int option = -1;
+        try {
+            option = Integer.parseInt(input);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid integer.");
+            Utils.pause(1);
+        }
+        return option;
     }
 }
+
