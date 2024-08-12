@@ -53,9 +53,11 @@ public class Admin extends User {
                     "null",
                     "null"};
                 Admin.addUser(data);
+                Utils.pause(10);
                 return true;
             }
         } catch (Exception e) {
+            Utils.pause(1);
             System.err.println("Registration failed" + e.getMessage());
             return false;
         }
