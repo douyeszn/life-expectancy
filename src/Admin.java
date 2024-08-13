@@ -103,14 +103,10 @@ public class Admin extends User {
                     System.err.println(s);
                 }
             } else {
-                System.out.println("Users have been exported successfully.");
+                String filePath = "/home/attah/life-expectancy/patients.csv";
+                System.out.println("Data have been exported successfully to: " + filePath);
             }
 
-//            if (exitCode == 1) {
-//                System.out.println("Users have been exported.");
-//            }else{
-//                System.out.println("User export failed.");
-//            }
         }catch(Exception e){
             System.err.println(e.getMessage());
         }

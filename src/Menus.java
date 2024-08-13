@@ -9,7 +9,6 @@ public class Menus {
         System.out.println("0. Quit");
         System.out.println("***********************************************************************");
         System.out.print("> ");
-        System.out.print("> ");
     }
     
     public static String loginPage(Scanner scanner){
@@ -311,29 +310,35 @@ public class Menus {
     }
 
     public static void exportDataPage(Scanner scanner, Admin admin) {
-        System.out.println("************* Export Menu **************");
-        System.out.println("1. Export Users");
-        System.out.println("2. Export User Analytics");
-        System.out.println("0. Exit");
+        int choice = -1;
+        do{
+            Utils.clearScreen();
+            System.out.println("************************** Export Data Menu ***************************");
+            System.out.println("1. Export Users Data");
+            System.out.println("2. Export User Analytics");
+            System.out.println("0. Exit");
+            System.out.println("***********************************************************************");
+            System.out.print("> ");
 
-        System.out.print("Select an option: ");
-        String choice = scanner.nextLine();
+            String input = scanner.nextLine();
+            choice = InputValidator.parseInteger(input);
+            switch (choice) {
+                case 1:
+                    admin.downloadUsers();
+                    Utils.pause(2);
+                    break;
+                case 2:
+                    admin.exportStats();
+                    Utils.pause(2);
+                    break;
+                default:
+                    System.out.println("Invalid option selected. Please try again.");
+                    Utils.pause(1);
+                    break;
+            }
 
-        Utils.clearScreen();
+        } while(choice != 0);
 
-        switch (choice) {
-            case "1":
-                admin.downloadUsers();
-                break;
-            case "2":
-                admin.exportStats();
-                break;
-            default:
-                System.out.println("Invalid option selected. Please try again.");
-                break;
-        }
-
-        Utils.pause(1);
     }
 
 }
