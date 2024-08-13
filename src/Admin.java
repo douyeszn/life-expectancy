@@ -115,4 +115,51 @@ public class Admin extends User {
             System.err.println(e.getMessage());
         }
     }
+
+    public void exportStats() {
+        String[] cmd = {
+                "bash",
+                "resource/getSurvivalRate.sh"
+        };
+        ProcessBuilder pb = new ProcessBuilder(cmd);
+        try {
+            Process process = pb.start();
+            int exitCode = process.waitFor();
+
+            BufferedReader stdOutput = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            BufferedReader stdError = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+
+            String line;
+            List<Integer> daysToLiveList = new ArrayList<>();
+
+            while ((line = stdOutput.readLine()) != null) {
+                if (!line.equals("null") ) {
+                    try {
+                        daysToLiveList.add(Integer.parseInt(line.trim()));
+                    } catch (NumberFormatException e) {
+                        System.err.println("Failed to parse line as an integer: " + line);
+                    }
+                }
+            }
+
+            if (exitCode != 0) {
+                while ((line = stdError.readLine()) != null) {
+                    System.err.println(line);
+                }
+                throw new RuntimeException("Script execution failed with exit code " + exitCode);
+            }
+
+            if (daysToLiveList.isEmpty()) {
+                throw new RuntimeException("No valid daysToLive values returned.");
+            }
+
+            new Statistics(daysToLiveList).export();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error occurred while computing stats.", e);
+        }
+    }
+
+
 }

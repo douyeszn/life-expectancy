@@ -9,6 +9,7 @@ public class Menus {
         System.out.println("0. Quit");
         System.out.println("***************************************");
         System.out.print("> ");
+        System.out.print("> ");
     }
     
     public static String loginPage(Scanner scanner){
@@ -225,9 +226,30 @@ public class Menus {
         return true;
     }
 
-    public static void exportDataPage(Scanner scanner, Admin admin){
+    public static void exportDataPage(Scanner scanner, Admin admin) {
+        System.out.println("************* Export Menu **************");
+        System.out.println("1. Export Users");
+        System.out.println("2. Export User Analytics");
+        System.out.println("0. Exit");
+
+        System.out.print("Select an option: ");
+        String choice = scanner.nextLine();
+
         Utils.clearScreen();
-        admin.downloadUsers();
+
+        switch (choice) {
+            case "1":
+                admin.downloadUsers();
+                break;
+            case "2":
+                admin.exportStats();
+                break;
+            default:
+                System.out.println("Invalid option selected. Please try again.");
+                break;
+        }
+
         Utils.pause(1);
     }
+
 }
