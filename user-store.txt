@@ -6,7 +6,7 @@ UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive
 
 2297475c-9c2e-48c3-85ab-2c97562cebba,victor,Man,victor@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,1996-02-12,NGA,false,,false,,null
 
-78324fdc-ff4e-487f-b2ef-4d85522d2e74,super,hero,hiro@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,2020-06-01,NGA,false,,false,,28
+78324fdc-ff4e-487f-b2ef-4d85522d2e74,Attah,Hiro,hiro@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,2020-06-01,NGA,false,,false,,48
 
 ec2601c2-cc0d-431b-80a1-07ce1283d625,Zombie,man,zombie@cmu.edu,$6$gishwati$uVo.dGa9fAF7ESHBuMO6Q5hnO4yg0IzspPHle7Q/gfSCc6LvZkqfrdycH6nWCWJwUCUDgWsqkpBCAWGhTHJ1E1,PATIENT,1666-03-05,NGA,false,,false,,-306
 

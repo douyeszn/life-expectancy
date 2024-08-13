@@ -115,7 +115,7 @@ public class Menus {
             
             switch (choice) {
                 case 1:
-                    editNamePage(scanner);
+                    editNamePage(scanner, patient);
                     break;
                 case 2:
                     editDOBPage(scanner, patient);
@@ -127,25 +127,30 @@ public class Menus {
         } while (choice != 0);
     }
 
-    public static void editNamePage(Scanner scanner){
-        String input;
-        int choice;
+    public static void editNamePage(Scanner scanner, Patient patient){
+        String firstname;
+        String lastname;
         do{
             Utils.clearScreen();
             System.out.println("**************************** Edit Name ****************************");
-            System.out.print("1. Firstname \n2. Lastname \n> ");
-            input = scanner.nextLine();
-            choice = InputValidator.parseInteger(input);
-            switch (choice) {
-                case 1:
-                    System.out.println("Firstname > ");
 
-                    // break;
-            
-                default:
-                    break;
+            System.out.print("Firstname > ");
+            firstname = scanner.nextLine();
+            System.out.println("Lastname > ");
+            lastname = scanner.nextLine();
+
+            if(
+                User.updateDataField("user-store.txt", patient.getUUID(), firstname, DataStructure.firstName.getValue()) &&
+                User.updateDataField("user-store.txt", patient.getUUID(), lastname, DataStructure.lastName.getValue())
+                ){
+                System.out.println("Update successful");
+                Utils.pause(1);
+                break;
+            }else{
+                System.out.println("update failed");
+                Utils.pause(1);
             }
-        }while (choice != 0);
+        }while (true);
         
     }
 
