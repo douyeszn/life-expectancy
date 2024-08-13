@@ -1,35 +1,36 @@
 import java.util.Scanner;
-
+import java.io.Console;
 public class Menus {
     public static void homePage() {
         Utils.clearScreen();
-        System.out.println("********* HIV Life Expectancy *********");
+        System.out.println("************************* HIV Life Expectancy *************************");
         System.out.println("1. Login");
         System.out.println("2. Complete Registration");
         System.out.println("0. Quit");
-        System.out.println("***************************************");
+        System.out.println("***********************************************************************");
         System.out.print("> ");
     }
     
     public static String loginPage(Scanner scanner){
         Utils.clearScreen();
-        System.out.println("**************** Login ****************");
+        System.out.println("******************************** Login ********************************");
         System.out.print("Enter email > ");
         Credentials.email = scanner.nextLine();
-        System.out.print("Enter password > ");
-        Credentials.password = scanner.nextLine();
-        System.out.println("***************************************");
+        Console console = System.console();
+        char[] passwordChars = console.readPassword("Enter password > ");
+        Credentials.password = new String(passwordChars);
+        System.out.println("***********************************************************************");
         String data = User.login(Credentials.email, Credentials.password);
         return data;
     }
 
     public static void newRegistrationPage(Scanner scanner, Admin admin) {
         Utils.clearScreen();
-        System.out.println("********** Register New User **********");
+        System.out.println("************************** Register New User **************************");
         System.out.print("Enter New User email > ");
         Credentials.email = scanner.nextLine();
         admin.newPatientReg(Credentials.email);
-        System.out.println("***************************************");
+        System.out.println("***********************************************************************");
     }
 
     public static void adminPage(Scanner scanner, Admin admin){
@@ -37,12 +38,12 @@ public class Menus {
         int choice;
         do{
             Utils.clearScreen();
-            System.out.println("************* Admin Menu **************");
+            System.out.println("***************************** Admin Menu ******************************");
             System.out.println("1. Register New user");
             System.out.println("2. Register New Admin");
             System.out.println("3. Export data");
             System.out.println("0. Logout");
-            System.out.println("***************************************");
+            System.out.println("***********************************************************************");
             System.out.print("> ");
             input = scanner.nextLine();
             choice = InputValidator.parseInteger(input);
@@ -97,7 +98,7 @@ public class Menus {
         do{
             Utils.clearScreen();
             String format = "%-20s: %-30s%n";
-            System.out.println("********************************** Edit data **********************************");
+            System.out.println("**************************** Edit data ****************************");
             System.out.printf(format, "1. Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
             System.out.printf(format, "2. Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
             System.out.printf(format, "3. Country", User.getDataField(data, DataStructure.countryISO.getValue()));
@@ -105,19 +106,28 @@ public class Menus {
             System.out.printf(format, "5. Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
             System.out.printf(format, "6. On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
             System.out.printf(format, "7. Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
-            System.out.println("*******************************************************************************");
-            System.out.println("0. Back");
+            System.out.println("*******************************************************************");
+            System.out.println("Select field to edit (1-7)\t0. Back");
             System.out.print("> ");
             input = scanner.nextLine();
             choice = InputValidator.parseInteger(input);
             
+            switch (choice) {
+                case 1:
+                    
+                    break;
+            
+                default:
+                    System.out.println("invalid choice");
+                    break;
+            }
         } while (choice != 0);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
         Utils.clearScreen();
         int option = -1;
-        System.out.println("********************************** Complete Registration **********************************");
+        System.out.println("************************ Complete Registration ************************");
 
         System.out.print("Enter UUID > ");
         String uuid = scanner.nextLine();
@@ -195,8 +205,29 @@ public class Menus {
             System.out.print("Enter Country ISO Code (ABC) > ");
             String countryISO = scanner.nextLine();
 
-            System.out.print("Enter new password > ");
-            String password = scanner.nextLine();
+            Console console = System.console();
+            char[] passwordChars;
+            String password;
+            do {
+                // Prompt for the first password
+                passwordChars = console.readPassword("Enter password > ");
+                String password1 = new String(passwordChars);
+                
+                // Prompt for the second password
+                passwordChars = console.readPassword("Enter password again > ");
+                String password2 = new String(passwordChars);
+                
+                // Compare the two passwords
+                if (password1.equals(password2)) {
+                    password = password1;
+                    System.out.println("Password successfully set.");
+                    Utils.pause(1);
+                    break;
+                } else {
+                    System.out.println("Password mismatch. Please try again.");
+                }
+                
+            } while (true);
 
             boolean regStatus = Patient.completeRegistration(
                 uuid, // UUID remains the same
@@ -221,7 +252,8 @@ public class Menus {
             System.out.println("User does not exist.");
             return false;
         }
-        System.out.println("(\"*******************************************************************************");
+        System.out.println("***********************************************************************");
+        Utils.pause(1);
         return true;
     }
 
