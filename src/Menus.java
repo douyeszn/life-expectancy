@@ -78,16 +78,16 @@ public class Menus {
                 choice = InputValidator.parseInteger(input);
                 switch (choice) {
                     case 1: 
-                    patientEditPage(scanner, data, patient);
-                    break;
+                        patientEditPage(scanner, data, patient);
+                        break;
                     case 0:
-                    System.out.println("Logging out...");
-                    Utils.pause(1);
-                    break;
+                        System.out.println("Logging out...");
+                        Utils.pause(1);
+                        break;
                     default:
-                    System.out.println("Enter a valid option");
-                    Utils.pause(1);
-                    continue;
+                        System.out.println("Enter a valid option");
+                        Utils.pause(1);
+                        continue;
             }
         }while (choice != 0);
     }
@@ -114,14 +114,61 @@ public class Menus {
             
             switch (choice) {
                 case 1:
-                    
+                    editNamePage(scanner);
                     break;
-            
+                case 2:
+                    editDOBPage(scanner, patient);
+                    break;
                 default:
                     System.out.println("invalid choice");
                     break;
             }
         } while (choice != 0);
+    }
+
+    public static void editNamePage(Scanner scanner){
+        String input;
+        int choice;
+        do{
+            Utils.clearScreen();
+            System.out.println("**************************** Edit Name ****************************");
+            System.out.print("1. Firstname \n2. Lastname \n> ");
+            input = scanner.nextLine();
+            choice = InputValidator.parseInteger(input);
+            switch (choice) {
+                case 1:
+                    System.out.println("Firstname > ");
+
+                    // break;
+            
+                default:
+                    break;
+            }
+        }while (choice != 0);
+        
+    }
+
+    public static void editDOBPage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("***************************** Edit DOB *****************************");
+            System.out.print("New date of Birth (YYYY-MM-DD) > ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the date of birth update.");
+                return;
+            }
+            String date = InputValidator.parseDate(input);
+            if(User.updateDataField("user-store.txt", patient.getUUID(), date, DataStructure.dateofBirth.getValue())){
+                System.out.println("Update successful");
+                Utils.pause(1);
+                break;
+            }else{
+                System.out.println("update failed");
+                Utils.pause(1);
+            }
+        }while (true);
     }
 
     public static boolean completeRegPage(Scanner scanner) {
@@ -151,41 +198,41 @@ public class Menus {
 
             // Check for HIV
             do {
-                System.out.print("Are you HIV Positive? Press (1. Yes - 0. No) > ");
+                System.out.print("Are you HIV Positive? Press (1. Yes - 2. No) > ");
                 String isHIV = scanner.nextLine();
                 try {
                     option = Integer.parseInt(isHIV);
-                    if (option != 1 && option != 0) {
-                        System.out.println("Invalid input. Please enter 1 for Yes and 0 for No.");
+                    if (option != 1 && option != 2) {
+                        System.out.println("Invalid input. Please enter 1 for Yes and 2 for No.");
                     } else if (option == 1) {
                         isHIVPositive = true;
                     } else {
                         isHIVPositive = false;
                     }
                 } catch (NumberFormatException e) {
-                    System.out.println("Invalid input. Please enter a number. (0 or 1)");
+                    System.out.println("Invalid input. Please enter a number. (1 or 2)");
                     option = -1; // Set to an invalid number to continue the loop
                 }
-            } while (option != 1 && option != 0);
+            } while (option != 1 && option != 2);
 
             // Check for ART
             if (isHIVPositive) {
                 System.out.print("Enter date diagnosed (YYYY-MM-DD) > ");
                 diagnosisDate = scanner.nextLine();
                 do{
-                    System.out.print("Are you on ART Medication? Press (1. Yes - 0. No) > ");
+                    System.out.print("Are you on ART Medication? Press (1. Yes - 2. No) > ");
                     String onART = scanner.nextLine();
                     try {
                         option = Integer.parseInt(onART);
-                        if (option != 1 && option != 0) {
-                            System.out.println("Invalid input. Please enter 1 for Yes and 0 for No.");
+                        if (option != 1 && option != 2) {
+                            System.out.println("Invalid input. Please enter 1 for Yes and 2 for No.");
                         } else if (option == 1) {
                             onARTMedication = true;
                         } else {
                             onARTMedication = false;
                         }
                     } catch (NumberFormatException e) {
-                        System.out.println("Invalid input. Please enter a number. (0 or 1)");
+                        System.out.println("Invalid input. Please enter a number. (1 or 2)");
                         option = -1;
                     }
     
@@ -196,7 +243,7 @@ public class Menus {
                         startARTDate = "";
                     }
 
-                } while (option != 1 && option != 0);
+                } while (option != 1 && option != 2);
 
             }else{
                 diagnosisDate = "";

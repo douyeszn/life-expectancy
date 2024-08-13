@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Patient extends User{
+    private String uuid;
     private String dateOfBirth;
     private String countryISOcode;
     private boolean isHIVPositive;
@@ -19,6 +20,7 @@ public class Patient extends User{
     // }
 
     public Patient(
+            String uuid,
             String email,
             String password,
             String dateOfBirth,
@@ -28,6 +30,7 @@ public class Patient extends User{
             boolean onARTMedication,
             String startARTDate){
         super(null, null, email, password);
+        this.uuid = uuid;
         this.dateOfBirth = dateOfBirth;
         this.countryISOcode = countryISOcode;
         this.isHIVPositive = isHIVPositive;
@@ -137,7 +140,9 @@ public class Patient extends User{
 
         return 0;
     }
-
+    public String getUUID(){
+        return uuid;
+    }
     public String getCountryISOcode() {
         return countryISOcode;
     }
