@@ -54,6 +54,7 @@ public class App {
         } else if (role.equals(Role.PATIENT)) {
             Map<String, String> userMap = new UserMap(userData).getUserMap();
             Patient patient = new Patient(
+                userMap.get("id"),
                 userMap.get("email"),
                 userMap.get("password"),
                 userMap.get("dateOfBirth"),

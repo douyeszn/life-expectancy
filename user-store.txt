@@ -6,8 +6,8 @@ UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive
 
 2297475c-9c2e-48c3-85ab-2c97562cebba,victor,Man,victor@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,1996-02-12,NGA,false,,false,,null
 
-78324fdc-ff4e-487f-b2ef-4d85522d2e74,hiro,super,hiro@cmu.edu,$6$gishwati$MyQXcmdJnuDxauKtGtd3i5.8yITOBnbZi5BznbfjZa3J7UgKY1Gt60sPFAWNfJzXdxjMH7gXqVvJIkrpIZbEt.,PATIENT,1999-05-03,NGA,false,,false,,null
+78324fdc-ff4e-487f-b2ef-4d85522d2e74,super,hero,hiro@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,2020-06-01,NGA,false,,false,,28
 
-ec2601c2-cc0d-431b-80a1-07ce1283d625,Living,Zombie,zombie@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,1990-05-12,NGA,true,2000-06-08,false,,5
+ec2601c2-cc0d-431b-80a1-07ce1283d625,Zombie,man,zombie@cmu.edu,$6$gishwati$uVo.dGa9fAF7ESHBuMO6Q5hnO4yg0IzspPHle7Q/gfSCc6LvZkqfrdycH6nWCWJwUCUDgWsqkpBCAWGhTHJ1E1,PATIENT,1666-03-05,NGA,false,,false,,-306
 
-933ed89b-e938-4776-8208-e269e1a192a2,Victor,Miene,v@cmu.edu,$6$gishwati$ntOmFOafid8Sp8cKKGV6pPFh/Ir3krjBQZV4us23Y9WGwtZFSkYhcuHMx.n8.2OTgqh27JTM80pGNDJtrNrza1,PATIENT,1998-01-12,DZA,true,2007-01-12,true,2009-01-12,35
+97a890e4-2796-4ca5-a847-49372de19a00,super,user,sudo@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,ADMIN,,,false,,false,,null
