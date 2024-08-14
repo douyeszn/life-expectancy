@@ -97,17 +97,20 @@ public class Menus {
         int choice;
         do{
             Utils.clearScreen();
-            String format = "%-20s: %-30s%n";
+            String format = "%-30s: %-30s%n";
             System.out.println("**************************** Edit data ****************************");
             System.out.printf(format, "1. Name", User.getDataField(data, DataStructure.firstName.getValue()) + " " + User.getDataField(data, DataStructure.lastName.getValue()));
             System.out.printf(format, "2. Date of Birth", User.getDataField(data, DataStructure.dateofBirth.getValue()));
             System.out.printf(format, "3. Country", User.getDataField(data, DataStructure.countryISO.getValue()));
-            System.out.printf(format, "4. HIV Positive", User.getDataField(data, DataStructure.isHIVPositive.getValue()).equals("true") ? "Yes" : "No");
-            System.out.printf(format, "5. Diagnosis Date", User.getDataField(data, DataStructure.DiagnosisDate.getValue()));
-            System.out.printf(format, "6. On ART Medication", User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes" : "No");
-            System.out.printf(format, "7. Start ART Date", User.getDataField(data, DataStructure.startARTDate.getValue()));
+            System.out.printf(format, "4. HIV Status and Date", 
+                                User.getDataField(data, DataStructure.isHIVPositive.getValue()).equals("true") ? "Yes | " + 
+                                User.getDataField(data, DataStructure.DiagnosisDate.getValue()): "No"
+                                );
+            System.out.printf(format, "5. ART Status and Date",
+                                User.getDataField(data, DataStructure.onARTMed.getValue()).equals("true") ? "Yes | " +
+                                User.getDataField(data, DataStructure.startARTDate.getValue()): "No");
             System.out.println("*******************************************************************");
-            System.out.println("Select field to edit (1-7)\t0. Back");
+            System.out.println("Select field to edit (1-5)\t0. Back");
             System.out.print("> ");
             input = scanner.nextLine();
             choice = InputValidator.parseInteger(input);
@@ -118,6 +121,15 @@ public class Menus {
                     break;
                 case 2:
                     editDOBPage(scanner, patient);
+                    break;
+                case 3:
+                    editCountryPage(scanner, patient);
+                    break;
+                case 4:
+                    editHIVStatusPage(scanner, patient);
+                    break;
+                case 5:
+                    editARTStatusPage(scanner, patient);
                     break;
                 default:
                     System.out.println("invalid choice");
@@ -161,11 +173,158 @@ public class Menus {
             System.out.print("New date of Birth (YYYY-MM-DD) > ");
             input = scanner.nextLine();
             if ("0".equals(input)) {
-                System.out.println("Exiting the date of birth update.");
+                System.out.println("Exiting the update.");
                 return;
             }
             String date = InputValidator.parseDate(input);
             if(User.updateDataField("user-store.txt", patient.getUUID(), date, DataStructure.dateofBirth.getValue())){
+                System.out.println("Update successful");
+                Utils.pause(1);
+                break;
+            }else{
+                System.out.println("update failed");
+                Utils.pause(1);
+            }
+        }while (true);
+    }
+
+    public static void editCountryPage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("*************************** Edit Country ***************************");
+            System.out.print("New Country ISO (eg USA or US) > ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the update.");
+                return;
+            }
+            String iso = InputValidator.parseISO(input);
+            if(User.updateDataField("user-store.txt", patient.getUUID(), iso, DataStructure.countryISO.getValue())){
+                System.out.println("Update successful");
+                Utils.pause(1);
+                break;
+            }else{
+                System.out.println("update failed");
+                Utils.pause(1);
+            }
+        }while (true);
+    }
+
+    public static void editHIVStatusPage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("************************** Edit HIV Status **************************");
+            System.out.print("Are you HIV Positive? \n1. Yes\n2. No\n> ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the update.");
+                return;
+            }
+            int choice = InputValidator.parseInteger(input);
+            if(choice == 1){
+                if(User.updateDataField("user-store.txt", patient.getUUID(), "true", DataStructure.isHIVPositive.getValue())){
+                    System.out.println("Update successful");
+                    Utils.pause(1);
+                    editHIVDatePage(scanner, patient);
+                    break;
+                }else{
+                    System.out.println("update failed");
+                    Utils.pause(1);
+                }
+            }else if (choice == 2) {
+                if(User.updateDataField("user-store.txt", patient.getUUID(), "false", DataStructure.isHIVPositive.getValue())){
+                    User.updateDataField("user-store.txt", patient.getUUID(), "", DataStructure.DiagnosisDate.getValue());
+                    System.out.println("Update successful");
+                    Utils.pause(1);
+                    break;
+                }else{
+                    System.out.println("update failed");
+                    Utils.pause(1);
+                }
+                
+            }else{
+                System.out.println("Enter a valid option");
+            }
+        }while (true);
+    }
+
+    public static void editARTStatusPage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("************************** Edit ART Status **************************");
+            System.out.print("Are you on ART Medication? \n1. Yes\n2. No\n> ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the update.");
+                return;
+            }
+            int choice = InputValidator.parseInteger(input);
+            if(choice == 1){
+                if(User.updateDataField("user-store.txt", patient.getUUID(), "true", DataStructure.onARTMed.getValue())){
+                    System.out.println("Update successful");
+                    Utils.pause(1);
+                    editARTDatePage(scanner, patient);
+                    break;
+                }else{
+                    System.out.println("update failed");
+                    Utils.pause(1);
+                }
+            }else if (choice == 2) {
+                if(User.updateDataField("user-store.txt", patient.getUUID(), "false", DataStructure.onARTMed.getValue())){
+                    User.updateDataField("user-store.txt", patient.getUUID(), "", DataStructure.startARTDate.getValue());
+                    System.out.println("Update successful");
+                    Utils.pause(1);
+                    break;
+                }else{
+                    System.out.println("update failed");
+                    Utils.pause(1);
+                }
+                
+            }else{
+                System.out.println("Enter a valid option");
+            }
+        }while (true);
+    }
+
+    public static void editHIVDatePage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("***************************** HIV Date *****************************");
+            System.out.print("Enter HIV Diagnosis date (YYYY-MM-DD) > ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the update.");
+                return;
+            }
+            String date = InputValidator.parseDate(input);
+            if(User.updateDataField("user-store.txt", patient.getUUID(), date, DataStructure.DiagnosisDate.getValue())){
+                System.out.println("Update successful");
+                Utils.pause(1);
+                break;
+            }else{
+                System.out.println("update failed");
+                Utils.pause(1);
+            }
+        }while (true);
+    }
+
+    public static void editARTDatePage(Scanner scanner, Patient patient){
+        String input;
+        do{
+            Utils.clearScreen();
+            System.out.println("***************************** ART Date *****************************");
+            System.out.print("Enter ART Start date (YYYY-MM-DD) > ");
+            input = scanner.nextLine();
+            if ("0".equals(input)) {
+                System.out.println("Exiting the update.");
+                return;
+            }
+            String date = InputValidator.parseDate(input);
+            if(User.updateDataField("user-store.txt", patient.getUUID(), date, DataStructure.startARTDate.getValue())){
                 System.out.println("Update successful");
                 Utils.pause(1);
                 break;
