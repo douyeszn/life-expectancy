@@ -1,0 +1,6 @@
+user-survival-stats.txt
+Mean: -17.25
+Median: 12.00
+25th Percentile: -158.00
+50th Percentile: 5.00
+75th Percentile: 19.00

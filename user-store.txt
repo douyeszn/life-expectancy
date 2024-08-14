@@ -8,4 +8,18 @@ UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive
 
 78324fdc-ff4e-487f-b2ef-4d85522d2e74,Attah,Hiro,hiro@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,PATIENT,1999-05-03,USA,true,2004-06-15,true,2012-05-10,19
 
-97a890e4-2796-4ca5-a847-49372de19a00,super,user,sudo@cmu.edu,$6$gishwati$Y3mSDfB53J97bFM035MLnPvax0dZt.vNLLEl5HSNLzPhxoWOv1qJ0XTmCuzapv/tJa07S.QXM8uvbkzw7Rh7W.,ADMIN,,,false,,false,,null
+97a890e4-2796-4ca5-a847-49372de19a00,Lucie,Fifi,sudo@cmu.edu,,ADMIN,2007-04-06,AND,true,2010-09-08,true,2010-12-12,null
+
+7ff9faf4-f898-4399-a667-bd6f9f32a097,Lavender,Lavie,lu@cmu.edu,,PATIENT,2016-03-20,AND,true,2016-03-20,true,2016-03-20,65
+
+9cb9aa48-d8cb-4217-9c01-14f889ff1391,Rwanda,Rwanda,rwanda@cmu.edu,,PATIENT,2010-02-03,RWA,true,2020-03-04,false,,5
+c932c2c1-3458-4233-aa12-d9589a35b88d,Kigali,Rwanda,kgl@cmu.edu,,PATIENT,1800-01-01,RWA,true,1998-04-20,false,,-158
+
+c78438fc-8e10-4244-9e9e-bd0c566e819d,b,bb,b@cmu.edu,,PATIENT,2020-20-03,RWA,true,2021-03-02,true,2022-03-03,null
+b66a55c9-c980-4596-9503-314013f78c8d,c,cc,c@cmu.edu,,PATIENT,2022-02-02,RWA,false,,false,,null
+e2099ccd-6fe6-4d6b-9fe2-e3d463620767,null,null,d@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
+2123e6b5-fdff-46dd-be71-cf4680ea0f89,null,null,e@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
+b0f69a76-7e34-46c3-a010-ac089971207c,null,null,f@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
+69c8cce9-60bb-4bfc-840d-8450b55976d3,null,null,g@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
+37c03d29-fbff-4426-8aa1-0875deb851f7,null,null,h@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
+4dfbf3c8-bc7b-4ebe-8db8-4a9dd510a6f2,null,null,i@cmu.edu,null,PATIENT,null,null,null,null,null,null,null
