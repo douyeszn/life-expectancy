@@ -2,4 +2,5 @@ UUID,firstName,lastName,email,password,role,dateofBirth,countryISO,isHIVPositive
 54d7c413-e0f4-43fd-b6b3-777566a6374c,sick,man,sick@cmu.edu,PATIENT,2001-05-02,USA,true,2006-05-04,true,2008-06-04,null,
 2297475c-9c2e-48c3-85ab-2c97562cebba,victor,Man,victor@cmu.edu,PATIENT,1996-02-12,NGA,false,,false,,null,
 78324fdc-ff4e-487f-b2ef-4d85522d2e74,Attah,Hiro,hiro@cmu.edu,PATIENT,1999-05-03,USA,true,2004-06-15,true,2012-05-10,19,
-ec2601c2-cc0d-431b-80a1-07ce1283d625,Zombie,man,zombie@cmu.edu,PATIENT,1666-03-05,NGA,false,,false,,-306,
+8c25ebcf-ba3d-4534-a045-7c41cff01327,Adam,Parker,adam@cmu.edu,PATIENT,2005-02-04,USA,true,2022-06-08,true,2023-09-07,46,
+0a293141-754f-44b2-b5df-12ec93c63f27,Manny,Lisp,manny@cmu.edu,PATIENT,2000-05-01,USA,true,2005-06-08,true,2008-05-07,37,

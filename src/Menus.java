@@ -412,9 +412,15 @@ public class Menus {
             }else{
                 diagnosisDate = "";
             }
-
-            System.out.print("Enter Country ISO Code (ABC) > ");
-            String countryISO = scanner.nextLine();
+            String countryISO = null;
+            do{
+                System.out.print("Enter Country ISO Code (ABC) > ");
+                String iso = scanner.nextLine();
+                countryISO = InputValidator.parseISO(iso);
+                if(countryISO != null){
+                    break;
+                }
+            }while(true);
 
             Console console = System.console();
             char[] passwordChars;
